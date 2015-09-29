@@ -1,6 +1,9 @@
-__author__ = 'Osei'
+#__author__ = 'Osei'
 
 import unittest
+import sys
+sys.path.append('..')
+
 import web_service
 
 soap_service = web_service.SoapService()
@@ -19,4 +22,5 @@ class web_service_tests(unittest.TestCase):
         self.assertEqual(response, expected_result)
 
 
-
+if __name__=='__main__':
+    unittest.main()
