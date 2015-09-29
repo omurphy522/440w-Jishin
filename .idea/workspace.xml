@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="170799c8-59d5-4c13-8795-e585f2f50517" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Osei\Documents\Fall2015\IST440W\Repo\440w-Jishin\kerberos\kerbauthtest.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="170799c8-59d5-4c13-8795-e585f2f50517" name="Default" comment="" />
     <ignored path="440w-Jishin.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
