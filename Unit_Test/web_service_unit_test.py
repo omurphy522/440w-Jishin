@@ -4,6 +4,7 @@ import unittest
 import sys
 sys.path.append('..')
 
+
 import web_service
 
 soap_service = web_service.SoapService()
@@ -20,6 +21,8 @@ class web_service_tests(unittest.TestCase):
 
         response = web_service.SoapService.performop(service, num_one, num_two, num_three)
         self.assertEqual(response, expected_result)
+
+
 
 
 if __name__=='__main__':

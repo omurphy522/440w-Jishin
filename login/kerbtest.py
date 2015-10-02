@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import jwt
+import Token
 import subprocess
 import os
 
@@ -11,7 +11,7 @@ class kerberos():
             print('you\'re authenticated')
  	    key = 'secret'
 	    payload = {'username':usrnam, 'authentication':'auth'}
-	    token = jwt.encode(payload, key, 'HS256')
+	    token = Token.encode(payload, key, 'HS256')
 	    return token
 
         else:
@@ -22,12 +22,12 @@ class kerberos():
 #    def create_token(self, usrnam):
 #	key = 'secret'
 #	payload = {'username':usrnam ,'authentication':'auth'}
-#	token = jwt.encode(payload, key, 'HS256') 
+#	token = Token.encode(payload, key, 'HS256')
 #	return token
 #	
 
 
-#decode = jwt.decode(token, 'secret', 'HS256')
+#decode = Token.decode(token, 'secret', 'HS256')
 #	print decode	
         #if authenticate == 0:
          #   while(False):
