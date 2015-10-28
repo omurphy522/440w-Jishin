@@ -9,5 +9,6 @@ def get_api_urls():
     {'name':'gulf_coast_all_w', 'url':'http://api.eia.gov/series/?api_key=D7448759E3B234C54606C2E410368612&series_id=PET.EMM_EPM0_PTE_R30_DPG.W&out=xml'},
     {'name':'rock_mountains_all_w', 'url':'http://api.eia.gov/series/?api_key=D7448759E3B234C54606C2E410368612&series_id=PET.EMM_EPM0_PTE_R40_DPG.W&out=xml'},
     {'name':'west_coast_all_w', 'url':'http://api.eia.gov/series/?api_key=D7448759E3B234C54606C2E410368612&series_id=PET.EMM_EPM0_PTE_R50_DPG.W&out=xml'},
-    {'name':'west_coast_no_cali_all_w', 'url':'http://api.eia.gov/series/?api_key=D7448759E3B234C54606C2E410368612&series_id=PET.EMM_EPM0_PTE_R5XCA_DPG.W&out=xml'}]
+    {'name':'west_coast_no_cali_all_w', 'url':'http://api.eia.gov/series/?api_key=D7448759E3B234C54606C2E410368612&series_id=PET.EMM_EPM0_PTE_R5XCA_DPG.W&out=xml'},
+    {'name':'us_all_a', 'url':'http://api.eia.gov/series/?api_key=D7448759E3B234C54606C2E410368612&series_id=PET.EMM_EPM0_PTE_NUS_DPG.A&out=xml'}]
     return api_urls
