@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import Token
+import token
 import subprocess
 import os
 
@@ -11,7 +11,7 @@ class kerberos():
             print('you\'re authenticated')
  	    key = 'secret'
 	    payload = {'username':usrnam, 'authentication':'auth'}
-	    token = Token.encode(payload, key, 'HS256')
+	    token = token.encode(payload, key, 'HS256')
 	    return token
 
         else:
@@ -22,12 +22,12 @@ class kerberos():
 #    def create_token(self, usrnam):
 #	key = 'secret'
 #	payload = {'username':usrnam ,'authentication':'auth'}
-#	token = Token.encode(payload, key, 'HS256')
+#	token = token.encode(payload, key, 'HS256')
 #	return token
 #	
 
 
-#decode = Token.decode(token, 'secret', 'HS256')
+#decode = token.decode(token, 'secret', 'HS256')
 #	print decode	
         #if authenticate == 0:
          #   while(False):

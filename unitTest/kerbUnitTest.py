@@ -1,12 +1,12 @@
 __author__ = 'Osei'
 
-from kerberos import kerberos_authentication
+from kerberos import kerberosAuthentication
 import unittest
 
 class kerberos_tests(unittest.TestCase):
 
     def login_test(self):
-        kerb_mock = kerberos_authentication
+        kerb_mock = kerberosAuthentication
         name="name"
 
         response = kerb_mock.create_token(name)

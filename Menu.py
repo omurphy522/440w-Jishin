@@ -1,11 +1,11 @@
-from Validators import Menu_Validation
-from Errors import ValidationErrors
+from validators import validationMenu
+from errors import validationErrors
 import sys
 sys.path.append('..')
 
 
 
-validator = Menu_Validation.Input_Validator()
+validator = validationMenu.Input_Validator()
 
 
 menu = {}
@@ -77,5 +77,5 @@ while True:
 
         else:
             print "UNKNOWN SELECTION"
-    except ValidationErrors.InputError as Err:
+    except validationErrors.InputError as Err:
         print "ERROR: " + str(Err.msg)
