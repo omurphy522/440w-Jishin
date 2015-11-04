@@ -1,0 +1,68 @@
+#Name: apiCollectionUpdate
+#Author(s): Brian Gracin, Owen Murphy
+#Course: IST 440W
+#Professor: Senior Lecturer Joseph Oakes
+#Created: 10/19/2015
+#Modified: 11/2/2015
+
+try:
+    from pymongo import MongoClient
+except ImportError as e:
+    print("Import MongoClient not found")
+try:
+    import urllib2
+except ImportError as e:
+    print("Import urllib2 not found")
+try:
+    import apiList
+except ImportError as e:
+    print("Import local file apiList not found")
+try:
+    from xml.etree import ElementTree as ET
+except ImportError as e:
+    print("Import ElementTree not found")
+
+try:
+    #Declare client and database being used
+    client = MongoClient()
+    db = client.eia_data
+except Exception as e:
+    print "Mongo error ", e
+
+try:
+    #Populate requestURLs object with api urls from file
+    requestURLs = apiList.getApiUrls()
+except Exception:
+    print "Method not found"
+
+try:
+    #Iterate through list of URLs
+    for api_url in requestURLs:
+        #Request XML object from API
+        tree = ET.parse(urllib2.urlopen(api_url['url']))
+
+        #Parse XML, code would haveto change if XML format changes
+        root = tree.getroot()
+        series = tree.find("series")
+        series_row = series.find("row")
+        data = series_row.find("data")
+        data_row = data.findall("row")
+
+        #Pull name for collection stored in requestURLs object
+        collection = db[api_url['name']]
+
+        #Grab date from most recent data point for comparison
+        last_data_set = max(collection.find({},{"date":1, "_id":0}))
+
+        #Iterate through XML members to populate documents
+        for row in data_row:
+            date = row.find('date').text
+
+            if date > last_data_set['date']:
+                value = row.find('value').text
+                post = {"date": date, "value": value}
+                collection.insert_one(post)
+except urllib2.HTTPError:
+    print "Could not download file ", apiUrl['url']
+except Exception as e:
+    print "Exception ", e
