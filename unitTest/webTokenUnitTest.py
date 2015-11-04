@@ -4,9 +4,9 @@ import unittest
 import sys
 sys.path.append('..')
 
-from token import tokenWeb
+from token import webToken
 
-tokenHandler = tokenWeb.tokenHandler()
+tokenHandler = webToken.tokenHandler()
 
 class token_handler_tests(unittest.TestCase):
 

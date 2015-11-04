@@ -1,11 +1,11 @@
-from validators import validationMenu
+from validators import menuValidation
 from errors import validationErrors
 import sys
 sys.path.append('..')
 
 
 
-validator = validationMenu.Input_Validator()
+validator = menuValidation.Input_Validator()
 
 
 menu = {}

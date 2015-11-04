@@ -7,7 +7,7 @@
 #
 # print token
 
-from token import tokenWeb
+from token import webToken
 from kerberos import kerberosAuthentication
 # test purposes only
 from constantValues.constants import constantsclass
@@ -15,7 +15,7 @@ from constantValues.constants import constantsclass
 def loginMethod(self, username):
 
     # Create instances of tokenHandler and kerberosHandler to access class methods
-    tokenHandler = tokenWeb.tokenHandler()
+    tokenHandler = webToken.tokenHandler()
     kerberosHandler = kerberosAuthentication.kerberosHandler()
 
     # Get username from user
