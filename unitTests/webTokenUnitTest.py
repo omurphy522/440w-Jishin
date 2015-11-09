@@ -1,6 +1,6 @@
 __author__ = 'Osei'
 
-import unittest
+import unitTests
 import sys
 sys.path.append('..')
 
@@ -8,7 +8,7 @@ from token import webToken
 
 tokenHandler = webToken.tokenHandler()
 
-class token_handler_tests(unittest.TestCase):
+class token_handler_tests(unitTests.TestCase):
 
     def test_create_token(self):
 

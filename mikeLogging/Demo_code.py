@@ -1,4 +1,4 @@
-import logging
+import mikeLogging
 import time
 
 #Account Creation
@@ -36,12 +36,12 @@ print ("----------------------------------")
 
 
 #Places the data on a log file, in this case, "Data_Entry.log"
-logging.basicConfig(filename='Data_Entry.log',level=logging.WARNING)
-logging.debug("----------------------------------")
-logging.debug(username)
-logging.debug(data)
-logging.debug(timestr)
-logging.debug("----------------------------------")
+mikeLogging.basicConfig(filename='Data_Entry.log',level=mikeLogging.WARNING)
+mikeLogging.debug("----------------------------------")
+mikeLogging.debug(username)
+mikeLogging.debug(data)
+mikeLogging.debug(timestr)
+mikeLogging.debug("----------------------------------")
 
 # © Michael Kachuk
 
