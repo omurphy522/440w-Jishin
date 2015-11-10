@@ -28,11 +28,13 @@ class messageReceive:
             # callback method prints results
 
             def callback(ch, method, body):
-                print " [x] Received %r" % body
+                message = " [x] Received %r" % body
                 time.sleep(body.count('.'))
+                print message
+                return message
                 print " [x] Done"
                 ch.basic_ack(delivery_tag=method.delivery_tag)
-                return ch
+
 
             channel.basic_qos(prefetch_count=1)
             channel.basic_consume(callback,
