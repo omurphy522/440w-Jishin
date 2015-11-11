@@ -37,9 +37,9 @@ except Exception:
 
 try:
     #Iterate through list of URLs
-    for api_url in requestURLs:
+    for apiUrl in requestURLs:
         #Request XML object from API
-        tree = ET.parse(urllib2.urlopen(api_url['url']))
+        tree = ET.parse(urllib2.urlopen(apiUrl['url']))
 
         #Parse XML, code would haveto change if XML format changes
         root = tree.getroot()
@@ -49,10 +49,11 @@ try:
         data_row = data.findall("row")
 
         #Pull name for collection stored in requestURLs object
-        collection = db[api_url['name']]
+        collection = db[apiUrl['name']]
 
         #Grab date from most recent data point for comparison
-        last_data_set = max(collection.find({},{"date":1, "_id":0}))
+        if collection.count() != 0:
+           last_data_set = max(collection.find({},{"date":1, "_id":0}))
 
         #Iterate through XML members to populate documents
         for row in data_row:
