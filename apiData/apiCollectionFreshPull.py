@@ -28,6 +28,7 @@ try:
     db = client.eia_data
 except Exception as e:
     print "Mongo error ", e
+    db.dropDatabase()
 
 try:
     #Populate requestURLs object with api urls from file
@@ -52,7 +53,7 @@ try:
         collection = db[apiUrl['name']]
 
         #Flush collection being pulled
-        collection.remove()
+        #collection.remove()
 
         #Iterate through XML members to populate documents
         for row in dataRow:

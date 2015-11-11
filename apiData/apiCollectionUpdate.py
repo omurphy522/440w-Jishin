@@ -52,7 +52,8 @@ try:
         collection = db[api_url['name']]
 
         #Grab date from most recent data point for comparison
-        last_data_set = max(collection.find({},{"date":1, "_id":0}))
+        if collection.count() != 0:
+           last_data_set = max(collection.find({},{"date":1, "_id":0}))
 
         #Iterate through XML members to populate documents
         for row in data_row:
