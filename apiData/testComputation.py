@@ -54,7 +54,7 @@ try:
        date_squared_list.append(pow(float(ordinal_date), 2))
        value_list.append(float(data['value']))
        date_value_list.append(ordinal_date * float(data['value']))
-except Exception as e
+except Exception as e:
     print "Error in Weekly data parsing: ", e
 
 #Monthly
@@ -86,14 +86,14 @@ try:
     slope = ((date_average * value_average) - date_value_average) / (pow(date_average, 2) - date_squared_averge)
 
     b = value_average - (slope * date_average)
-except TypeError
+except TypeError:
     print "Invalid value"
 
 try:
     user_input = raw_input("Enter integer: ")
 
     outcome = (slope * int(user_input)) + b
-except TypeError
+except TypeError:
     print "Invalid value in user input or outcome"
 
 print(outcome)

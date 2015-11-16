@@ -5,7 +5,7 @@ try:
 	import os
 	import sys
 	sys.path.append('..')
-	import constantValues.constants
+	from ConstantValues.Constants import constantsclass
 
 	class kerberosHandler:
 
@@ -35,9 +35,10 @@ try:
 				subprocess.call(['kinit',username])
 
 
-			return str(constantValues.constants.constantsclass.AUTHENTICATED)
+			return True
 
 except ImportError as e:
 	print("Broken Impot Statement")
+
 except IOError as (errno,strerror):
 	print("IOError")
