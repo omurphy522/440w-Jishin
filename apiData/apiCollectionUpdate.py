@@ -3,7 +3,7 @@
 #Course: IST 440W
 #Professor: Senior Lecturer Joseph Oakes
 #Created: 10/19/2015
-#Modified: 11/2/2015
+#Modified: 11/16/2015
 
 try:
     from pymongo import MongoClient
@@ -37,9 +37,9 @@ except Exception:
 
 try:
     #Iterate through list of URLs
-    for api_url in requestURLs:
+    for apiUrl in requestURLs:
         #Request XML object from API
-        tree = ET.parse(urllib2.urlopen(api_url['url']))
+        tree = ET.parse(urllib2.urlopen(apiUrl['url']))
 
         #Parse XML, code would haveto change if XML format changes
         root = tree.getroot()
@@ -49,7 +49,7 @@ try:
         data_row = data.findall("row")
 
         #Pull name for collection stored in requestURLs object
-        collection = db[api_url['name']]
+        collection = db[apiUrl['name']]
 
         #Grab date from most recent data point for comparison
         if collection.count() != 0:
