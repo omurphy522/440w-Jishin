@@ -4,15 +4,20 @@
 # Course: IST 440w
 # Instructor: Professor Oakes
 
+#import statements
+import pika
+import time
+
+
 class messageReceive:
+
     def getMessage(self, username):
+
         # try catch to log errors
         try:
-            #import statements
-            import pika
-            import time
+
             # well be switched to call username from login
-            username = raw_input("ENTER USERNAME: ")
+            # username = raw_input("ENTER USERNAME: ")
             # generates connection to message server
             connection = pika.BlockingConnection(pika.ConnectionParameters(
                     host='localhost'))
@@ -21,24 +26,23 @@ class messageReceive:
             channel.queue_declare(queue=username, durable=True)
             print ' [*] Waiting for messages. To exit press CTRL+C'
             # callback method prints results
-            def callback(ch, method, body):
-                print " [x] Received %r" % (body,)
-                time.sleep( body.count('.') )
+
+            def callback(ch, method, properties, body):
+                messageReceived = " [x] Received %r" % body
+                time.sleep(body.count('.'))
+                print messageReceived
                 print " [x] Done"
                 ch.basic_ack(delivery_tag=method.delivery_tag)
-
+                channel.stop_consuming()
             channel.basic_qos(prefetch_count=1)
             channel.basic_consume(callback,
                                   queue=username)
 
             channel.start_consuming()
+
         except ValueError as e:
             # LOGGER.error(e.message)
             print('No Connection Made')
-        except ImportError as e:
-            # LOGGER.error(e.message)
-            print('Import Error in clientRabbitMqPickupMessage.py')
         except Exception as e:
             # LOGGER.error(e.message)
             print('Error in message receive client')
-

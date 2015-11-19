@@ -1,6 +1,6 @@
 #__author__ = 'Osei'
 
-import unittest
+import unitTests
 import sys
 sys.path.append('..')
 
@@ -9,7 +9,7 @@ import web_service
 
 soap_service = web_service.SoapService()
 
-class web_service_tests(unittest.TestCase):
+class web_service_tests(unitTests.TestCase):
 
     def test_performOp(self):
 
@@ -26,4 +26,4 @@ class web_service_tests(unittest.TestCase):
 
 
 if __name__=='__main__':
-    unittest.main()
+    unitTests.main()
