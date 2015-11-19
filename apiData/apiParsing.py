@@ -1,9 +1,9 @@
-#Name: apiCollectionFreshPull
-#Author(s): Brian Gracin, Owen Murphy
-#Course: IST 440W
-#Professor: Senior Lecturer Joseph Oakes
-#Created: 10/19/2015
-#Modified: 11/2/2015
+# Name: apiParsing
+# Author(s): Brian Gracin, Owen Murphy
+# Course: IST 440W
+# Professor: Senior Lecturer Joseph Oakes
+# Created: 11/2/2015
+# Modified: 11/18/2015
 
 try:
     from pymongo import MongoClient
@@ -22,41 +22,35 @@ try:
 except ImportError as e:
     print "Import ElementTree not found"
 
-class APIParse:
 
+class APIParse:
     def apiCollectionFreshPull(self):
         try:
-            #Declare client and database being used
+            # Declare client and database being used
             client = MongoClient()
             db = client.eia_data
-            #Purge database collections
+            # Purge database collections
             db.dropDatabase()
         except Exception as e:
             print "Mongo error ", e
 
         try:
-            #Populate requestURLs object with api urls from file
+            # Populate requestURLs object with api urls from file
             requestURLs = apiList.getApiUrls()
         except Exception:
             print "Method not found"
 
         try:
-            #Iterate through list of URLs
+            # Iterate through list of URLs
             for apiUrl in requestURLs:
-                #Request XML object from API
-                tree = ET.parse(urllib2.urlopen(apiUrl['url']))
 
-                #Parse XML, code would haveto change if XML format changes
-                root = tree.getroot()
-                series = tree.find("series")
-                seriesRow = series.find("row")
-                data = seriesRow.find("data")
-                dataRow = data.findall("row")
+                # Parse the current api file
+                dataRow = APIParse.parseAPI(self, apiUrl)
 
-                #Pull name for collection stored in requestURLs object
+                # Pull name for collection stored in requestURLs object
                 collection = db[apiUrl['name']]
 
-                #Iterate through XML members to populate documents
+                # Iterate through XML members to populate documents
                 for row in dataRow:
                     date = row.find('date').text
                     value = row.find('value').text
@@ -65,44 +59,38 @@ class APIParse:
         except urllib2.HTTPError:
             print "Could not download file ", apiUrl['url']
         except Exception as e:
-            print "Exception ", e
+            print "Exception: ", e
 
     def apiCollectionUpdate(self):
         try:
-            #Declare client and database being used
+            # Declare client and database being used
             client = MongoClient()
             db = client.eia_data
         except Exception as e:
             print "Mongo error ", e
 
         try:
-            #Populate requestURLs object with api urls from file
+            # Populate requestURLs object with api urls from file
             requestURLs = apiList.getApiUrls()
         except Exception:
             print "Method not found"
 
         try:
-            #Iterate through list of URLs
+            # Iterate through list of URLs
             for apiUrl in requestURLs:
-                #Request XML object from API
-                tree = ET.parse(urllib2.urlopen(apiUrl['url']))
-        
-                #Parse XML, code would haveto change if XML format changes
-                root = tree.getroot()
-                series = tree.find("series")
-                series_row = series.find("row")
-                data = series_row.find("data")
-                data_row = data.findall("row")
 
-                #Pull name for collection stored in requestURLs object
+                # Parse the current api file
+                dataRow = APIParse.parseAPI(self, apiUrl)
+
+                # Pull name for collection stored in requestURLs object
                 collection = db[apiUrl['name']]
 
-                #Grab date from most recent data point for comparison
+                # Grab date from most recent data point for comparison
                 if collection.count() != 0:
-                   last_data_set = max(collection.find({},{"date":1, "_id":0}))
+                    last_data_set = max(collection.find({}, {"date": 1, "_id": 0}))
 
-                #Iterate through XML members to populate documents
-                for row in data_row:
+                # Iterate through XML members to populate documents
+                for row in dataRow:
                     date = row.find('date').text
 
                     if date > last_data_set['date']:
@@ -112,4 +100,16 @@ class APIParse:
         except urllib2.HTTPError:
             print "Could not download file ", apiUrl['url']
         except Exception as e:
-            print "Exception ", e
+            print "Exception: ", e
+
+    def parseAPI(self, apiUrl):
+        # Request XML object from API
+        tree = ET.parse(urllib2.urlopen(apiUrl['url']))
+
+        # Parse XML, code would have to change if XML format changes
+        series = tree.find("series")
+        seriesRow = series.find("row")
+        data = seriesRow.find("data")
+        dataRow = data.findall("row")
+
+        return dataRow

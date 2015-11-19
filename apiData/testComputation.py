@@ -1,9 +1,9 @@
-#Name: testComputations
-#Author(s): Brian Gracin
-#Course: IST 440W
-#Professor: Senior Lecturer Joseph Oakes
-#Created: 10/19/2015
-#Modified: 11/2/2015
+# Name: testComputations
+# Author(s): Brian Gracin
+# Course: IST 440W
+# Professor: Senior Lecturer Joseph Oakes
+# Created: 10/19/2015
+# Modified: 11/18/2015
 
 try:
     from pymongo import MongoClient
@@ -15,85 +15,131 @@ from datetime import timedelta
 import math
 import time
 
-collection_name = raw_input("Enter collection name: ")
+class ComputationClass:
 
-try:
-    #Declare client and database being used
-    client = MongoClient()
-    db = client.eia_data
-    collection = db[collection_name]
-except Exception as e:
-    print "Mongo error ", e
+    def computationalCalculations(self):
+        collection_name = raw_input("Enter collection name: ")
 
-data_set = collection.find({},{"_id":0})
-date_list = []
-value_list = []
-date_squared_list = []
-date_value_list = []
+        try:
+            # Declare client and database being used
+            client = MongoClient()
+            db = client.eia_data
+            collection = db[collection_name]
+        except Exception as e:
+            print "Mongo error ", e
 
-try:
-    #Weekly
-    for data in data_set:
-       #Get date stored in document
-       raw_date = data['date']
+        data_set = collection.find({}, {"_id": 0})
+        date_list = []
+        value_list = []
+        date_squared_list = []
+        date_value_list = []
 
-       #Split and remake string so that it can be parsed
-       string_date = raw_date[:4] + ' ' + raw_date[4:6] + ' ' + raw_date[6:]
+        try:
+            for data in data_set:
 
-       #Parse string into struct_time format
-       struct_date = time.strptime(string_date, "%Y %m %d")
+                # Weekly
+                ordinal_date = ComputationClass.weeklyDateConvert(self, data)
 
-       #Convert struct_time into date format
-       date_date = date.fromtimestamp(mktime(struct_date))
+                # Monthly
+                # ordinal_date = ComputationClass.monthlyDateConvert(self, data)
 
-       #Convert date to ordinal format and normalize for computation
-       ordinal_date = date_date.toordinal() - 727657 #4/4/1993
+                # Yearly
+                # ordinal_date = ComputationClass.yearlyDateConvert(self, data)
 
-       #Populate lists to be used for computation
-       date_list.append(ordinal_date)
-       date_squared_list.append(pow(float(ordinal_date), 2))
-       value_list.append(float(data['value']))
-       date_value_list.append(ordinal_date * float(data['value']))
-except Exception as e
-    print "Error in Weekly data parsing: ", e
+                # Populate lists to be used for computation
+                date_list.append(ordinal_date)
+                date_squared_list.append(pow(float(ordinal_date), 2))
+                value_list.append(float(data['value']))
+                date_value_list.append(ordinal_date * float(data['value']))
+        except Exception as e:
+            print "Error in Weekly data parsing: ", e
 
-#Monthly
-#for data in data_set:
-#   raw_date = date['date']
-#
-#   string_date = raw_date[:4] + ' ' + raw_date[4:]
-#   struct_date = time.strptime(string_date, "%Y %m")
-#   date_date = date.fromtimestamp(mktime(struct_date))
-#   date_date + timedelta(days=15)
-#   ordinal_date = date_date.toordinal - 727667
+        # Run Linear Regression on data pulled
+        ComputationClass.linearRegression(self, date_list, value_list, date_value_list, date_squared_list)
 
-#Yearly
-#for data in data_set:
-#   raw_date = date['date']
-#
-#   struct_date = time.strptime(raw_date, "%Y")
-#   date_date = date.fromtimestamp(mktime(struct_date))
-#   date_date + timedelta(days=182)
-#   ordinal_date = date_date.toordinal()
+    def linearRegression(self, date_list, value_list, date_value_list, date_squared_list):
+        try:
+            # Basic computation to be revised
+            date_average = sum(date_list) / float(len(date_list))
+            value_average = sum(value_list) / float(len(value_list))
+            date_value_average = sum(date_value_list) / float(len(date_value_list))
+            date_squared_average = sum(date_squared_list) / float(len(date_squared_list))
 
-try:
-    #Basic computation to be revised
-    date_average = sum(date_list) / float(len(date_list))
-    value_average = sum(value_list) / float(len(value_list))
-    date_value_average = sum(date_value_list) / float(len(date_value_list))
-    date_squared_averge = sum(date_squared_list) / float(len(date_squared_list))
+            slope = ((date_average * value_average) - date_value_average) / (pow(date_average, 2) - date_squared_average)
 
-    slope = ((date_average * value_average) - date_value_average) / (pow(date_average, 2) - date_squared_averge)
+            b = value_average - (slope * date_average)
+        except TypeError:
+            print "Invalid value"
 
-    b = value_average - (slope * date_average)
-except TypeError
-    print "Invalid value"
+        try:
+            user_input = raw_input("Enter integer: ")
 
-try:
-    user_input = raw_input("Enter integer: ")
+            outcome = (slope * int(user_input)) + b
+        except TypeError:
+            print "Invalid value in user input or outcome"
 
-    outcome = (slope * int(user_input)) + b
-except TypeError
-    print "Invalid value in user input or outcome"
+    def weeklyDateConvert(self, data):
+        try:
+            # Get date stored in document
+            raw_date = data['date']
 
-print(outcome)
+            # Split and remake string so that it can be parsed
+            string_date = raw_date[:4] + ' ' + raw_date[4:6] + ' ' + raw_date[6:]
+
+            # Parse string into struct_time format
+            struct_date = time.strptime(string_date, "%Y %m %d")
+
+            # Convert struct_time into date format
+            date_date = date.fromtimestamp(mktime(struct_date))
+
+            # Convert date to ordinal format and normalize for computation
+            ordinal_date = date_date.toordinal() - 727657  # 4/4/1993
+
+            return ordinal_date
+        except Exception as e:
+            print "Error in Weekly date parsing: ", e
+
+    def monthlyDateConvert(self, data):
+        try:
+            # Get date stored in document
+            raw_date = data['date']
+
+            # Split and remake string so that it can be parsed
+            string_date = raw_date[:4] + ' ' + raw_date[4:]
+
+            # Parse string into struct_time format
+            struct_date = time.strptime(string_date, "%Y %m")
+
+            # Convert struct_time into date format
+            date_date = date.fromtimestamp(mktime(struct_date))
+
+            # Correct for middle of the month
+            date_date + timedelta(days=15)
+
+            # Convert date to ordinal format and normalize for computation
+            ordinal_date = date_date.toordinal() - 727667
+
+            return ordinal_date
+        except Exception as e:
+            print "Error in Monthly date parsing: ", e
+
+    def yearlyDateConvert(self, data):
+        try:
+            # Get date stored in document
+            raw_date = data['date']
+
+            # Parse string into struct_time format
+            struct_date = time.strptime(raw_date, "%Y")
+
+            # Convert struct_time into date format
+            date_date = date.fromtimestamp(mktime(struct_date))
+
+            # Correct for middle of the year
+            date_date + timedelta(days=182)
+
+            # Convert date to ordinal format and normalize for computation
+            ordinal_date = date_date.toordinal() - 727564
+
+            return ordinal_date
+        except Exception as e:
+            print "Error in Yearly date parsing: ", e
