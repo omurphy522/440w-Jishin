@@ -12,7 +12,7 @@ class tokenHandler:
             key = 'secret'
             payload = {'username': username, 'authentication': 'auth'}
             token = jwt.encode(payload, key, 'HS256')
-            return
+            return token
 
         else:
             return False

@@ -27,18 +27,17 @@ class messageReceive:
             print ' [*] Waiting for messages. To exit press CTRL+C'
             # callback method prints results
 
-            def callback(ch, method, body):
-                message = " [x] Received %r" % body
+            def callback(ch, method, properties, body):
+                messageReceived = " [x] Received %r" % body
                 time.sleep(body.count('.'))
-                print message
-                return message
+                print messageReceived
                 print " [x] Done"
                 ch.basic_ack(delivery_tag=method.delivery_tag)
-
-
+                channel.stop_consuming()
             channel.basic_qos(prefetch_count=1)
             channel.basic_consume(callback,
                                   queue=username)
+
             channel.start_consuming()
 
         except ValueError as e:
@@ -47,4 +46,3 @@ class messageReceive:
         except Exception as e:
             # LOGGER.error(e.message)
             print('Error in message receive client')
-

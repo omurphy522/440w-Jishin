@@ -25,19 +25,24 @@ class messageQueue:
             # LOGGER.info('Channel Opened')
             # creates a durable persistent queue
             channel.queue_declare(queue=username, durable=True)
+            channel.confirm_delivery()
             # LOGGER.info('%s created a durable queue')(username)
             message = results
 
-            channel.basic_publish(exchange='',
-                                  routing_key=username,
-                                  body=message,
-                                  properties=pika.BasicProperties(
-                                      delivery_mode=2,  # make message persistent
-                                  ))  # LOGGER.info('Published message %s')(message)
-            answer = " [x] Sent %s" % (message)
-            print answer
-            connection.close()
-            return answer
+            if channel.basic_publish(exchange='',
+                                     routing_key=username,
+                                     body=message,
+                                     properties=pika.BasicProperties(content_type='text/plain',
+                                                                     delivery_mode=2),
+                                     mandatory=True):
+                print('Message publish was confirmed')
+                               # LOGGER.info('Published message %s')(message)
+                answer = " [x] Sent %s" % (message)
+                print answer
+                connection.close()
+                return answer
+            else:
+                print("Message was not confirmed")
             # LOGGER.info('Message Sent to %s')(username)
             # LOGGER.info('Connection Closed')
 

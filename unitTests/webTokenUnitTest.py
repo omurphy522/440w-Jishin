@@ -1,18 +1,26 @@
 __author__ = 'Osei'
 
-import unitTests
+import unitTest
 import sys
 sys.path.append('..')
 
-from token import webToken
+from token import web_token
+from ConstantValues.Constants import constantsclass
 
-tokenHandler = webToken.tokenHandler()
+tokenHandler = web_token.tokenHandler()
 
-class token_handler_tests(unitTests.TestCase):
+class token_handler_tests(unitTest.TestCase):
 
     def test_create_token(self):
+
+        user = "username"+constantsclass.AUTHENTICATED
+
+        response = tokenHandler.create_token(user)
+        self.assertIsNotNone(response)
+
+    def test_create_token_False(self):
 
         user = "username"
 
         response = tokenHandler.create_token(user)
-        self.assertIsNotNone(response)
+        self.assertFalse(response)
