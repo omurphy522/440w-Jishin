@@ -10,11 +10,10 @@ class test_token(unittest.TestCase):
 
     def tokenCase(self):
         username = name
-        claims = clam
-        testClaim = tokenTest.create_token(name)
+        claim = clam
 
-
-        self.assertEqual(username,claims)
+        testClaim = tokenTest.create_token(username)
+        self.assertEqual(username,claim)
 
 
 
