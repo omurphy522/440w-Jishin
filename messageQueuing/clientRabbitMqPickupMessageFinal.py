@@ -4,6 +4,8 @@
 # Course: IST 440w
 # Instructor: Professor Oakes
 
+import sys
+sys.path.append('..')
 import pika
 from logging_owen import handler_logging as jishinLogging
 from pika.exceptions import *
