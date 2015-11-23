@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 import jwt
+import sys
+sys.path.append('..')
 from ConstantValues.Constants import constantsclass
 from logging_owen import handler_logging as jishinLogging
 from pymongo import MongoClient
