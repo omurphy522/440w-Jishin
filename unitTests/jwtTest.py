@@ -1,19 +1,22 @@
 import unittest
 import sys
+
 sys.path.append('..')
 from Token import web_token
 
 tokenTest = web_token.tokenHandler()
 name = 'noa5159'
-clam = ''
-class test_token(unittest.TestCase):
 
-    def tokenCase(self):
+class token_create_token(unittest.TestCase):
+
+    def test_token_case(self):
         username = name
-        claim = clam
-
         testClaim = tokenTest.create_token(username)
-        self.assertEqual(username,claim)
+        self.assertIsNotNone(testClaim)
 
+    def test_claim(self):
+        username = name
+        testClaim = tokenTest.create_token(username)
 
-
+if __name__ == '__main__':
+    unittest.main()
