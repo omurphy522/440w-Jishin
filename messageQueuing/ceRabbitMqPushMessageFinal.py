@@ -5,6 +5,8 @@
 # Instructor: Professor Oakes
 
 import pika
+from logging_owen import handler_logging as jishinLogging
+from pika.exceptions import *
 
 class messageQueue:
 
@@ -29,11 +31,17 @@ class messageQueue:
                                      properties=pika.BasicProperties(content_type='text/plain',
                                                                      delivery_mode=2),
                                      mandatory=True):
-                # print('Message publish was confirmed')
+                jishinLogging.logger.info('Message Sent By %s' % username)
                 return results
             else:
-                # Logger.error
-                print('Message could not be confirmed')
-        except ValueError as e:
-            # LOGGER.error(e.message)
-            print('No connection made message not sent')
+               jishinLogging.logger.warning('Message Could Not Be Confirmed')
+        except Exception as e:
+            jishinLogging.logger.error(e.message)
+        except AMQPError as e:
+            jishinLogging.logger.error(e.message)
+        except AMQPConnectionError as e:
+            jishinLogging.logger.error(e.message)
+        except ProtocolSyntaxError as e:
+            jishinLogging.logger.error(e.message)
+        except UnsupportedAMQPFieldException as e:
+            jishinLogging.logger.error(e.message)
