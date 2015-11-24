@@ -4,7 +4,6 @@ import jwt
 import sys
 sys.path.append('..')
 from ConstantValues.Constants import constantsclass
-from logging_owen import handler_logging as jishinLogging
 from pymongo import MongoClient
 
 class tokenHandler:
@@ -17,17 +16,18 @@ class tokenHandler:
             collection = db.users
             claims = collection.find({'username': username})
         except Exception as e:
-            jishinLogging.logger.error("Mongo error ", e)
+            #jishinLogging.logger.error("Mongo error ", e)
+            print('mongo problame')
 
         if str(constantsclass.AUTHENTICATED)in username:
             key = 'secret'
             payload = claims
             token = jwt.encode(payload, key, 'HS256')
-            jishinLogging.logger.info('Created Token')
+            #jishinLogging.logger.info('Created Token')
             print jwt.decode(token, key, algorithms='HS256')
             return token
         else:
             return False
-            jishinLogging.logger.warning('Token Unable To Be Created')
+            #jishinLogging.logger.warning('Token Unable To Be Created')
 
 
