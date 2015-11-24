@@ -4,6 +4,8 @@
 # Course: IST 440w
 # Instructor: Professor Oakes
 
+import sys
+sys.path.append('..')
 from messageQueuing import ceRabbitMqPushMessageFinal
 from messageQueuing import clientRabbitMqPickupMessageFinal
 import unittest

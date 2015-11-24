@@ -5,9 +5,9 @@ logger = logging.getLogger('Jishin')
 logger.setLevel(logging.DEBUG)
 
 # create file handler which logs info and debug messages
-fh = logging.FileHandler('/tmp/jishin/logging/Error.log')
+fh = logging.FileHandler('/tmp/jishin/Logging/Error.log')
 fh.setLevel(logging.ERROR)
-ch = logging.FileHandler('/tmp/jishin/logging/Audit.log')
+ch = logging.FileHandler('/tmp/jishin/Logging/Audit.log')
 ch.setLevel(logging.INFO)
 
 # create formatter and add it to the handlers
