@@ -7,7 +7,7 @@
 import sys
 sys.path.append('..')
 import pika
-from logging_owen import handler_logging as jishinLogging
+from mikeLogging import LoggingFinal as jishinLogging
 from pika.exceptions import *
 
 
