@@ -30,3 +30,7 @@ class messageQueue_tests(unittest.TestCase):
 
     def test_no_queue(self):
         self.assertRaises(Exception, testReceive.getMessage(nonexistQueue))
+
+
+if __name__=='__main__':
+    unittest.main()
