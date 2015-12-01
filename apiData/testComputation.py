@@ -55,7 +55,9 @@ class ComputationClass:
             print "Error in Weekly data parsing: ", e
 
         # Run Linear Regression on data pulled
-        ComputationClass.linearRegression(self, date_list, value_list, date_value_list, date_squared_list)
+        results = ComputationClass.linearRegression(self, date_list, value_list, date_value_list, date_squared_list)
+
+        return results
 
     def linearRegression(self, date_list, value_list, date_value_list, date_squared_list):
         try:
@@ -77,6 +79,8 @@ class ComputationClass:
             outcome = (slope * int(user_input)) + b
         except TypeError:
             print "Invalid value in user input or outcome"
+
+        return outcome
 
     def weeklyDateConvert(self, data):
         try:
