@@ -2,55 +2,60 @@ from Errors import InputErrors
 from Errors import ValidationErrors
 import re
 from datetime import datetime
-
+from ConstantValues.Constants import constantsclass
 
 SpecialCharacters = re.compile(r"[<>/{}[\]~`]")
 Letters = re.compile(r"[a-zA-Z]")
+ThirtyDays = ['04','06','09','11']
+ThirtyOneDays = ['01','03','05','07','08','10','12']
 CurrentYear = datetime.now().year
 CurrentMonth = datetime.now().month
-States = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'HI', 'ID',
-          'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT',
-          'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR',
-          'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY']
-
+CurrentDay = datetime.now().day
+Regions = ['US', 'EAST_COAST', 'NEW_ENGLAND', 'CENTRAL_ATLANTIC', 'LOWER_ATLANTIC', 'MIDWEST', 'GULF_COAST',
+           'ROCK_MOUNTAINS', 'WEST_COAST']
+PredictionTypes = constantsclass.PREDICTION_TYPES
 
 class Input_Validator:
 
+    def validate_date(self, date):
 
-    def valildate_year(self, year):
-        if year is None:
-            raise ValidationErrors.InputError(year,InputErrors.InputErrors.YEAR_IS_BLANK)
-        elif len(year) != 4:
-            raise ValidationErrors.InputError(year, InputErrors.InputErrors.INCORRECT_YEAR_LENGTH)
-        elif SpecialCharacters.match(year):
-            raise ValidationErrors.InputError(year, InputErrors.InputErrors.YEAR_CONTAINS_SPECIAL_CHARACTERS)
-        elif Letters.match(year):
-            raise ValidationErrors.InputError(year, InputErrors.InputErrors.YEAR_CONTAINS_LETTER)
-        elif int(year) < int(CurrentYear):
-            raise ValidationErrors.InputError(year, InputErrors.InputErrors.INCORRECT_YEAR_VALUE)
+        if len(date) != 8:
+            raise ValidationErrors.InputError(date, InputErrors.InputErrors.INCORRECT_DATE_LENGTH)
+        elif SpecialCharacters.match(date):
+            raise ValidationErrors.InputError(date, InputErrors.InputErrors.DATE_CONTAINS_SPECIAL_CHARACTER)
+        elif Letters.match(date):
+            raise ValidationErrors.InputError(date, InputErrors.InputErrors.DATE_CONTAINS_LETTER)
+        else:
+            month = date[:2]
+            day = date[2:4]
+            year = date[4:]
 
+            # Validates Year
+            if int(year) < int(CurrentYear):
+                raise ValidationErrors.InputError(year, InputErrors.InputErrors.INCORRECT_YEAR_VALUE)
 
-    def validate_month(self, month, year):
-        if month is None:
-            raise ValidationErrors.InputError(month, InputErrors.InputErrors.MONTH_IS_BLANK)
-        elif len(month) != 2:
-            raise ValidationErrors.InputError(month, InputErrors.InputErrors.INCORRECT_MONTH_LENGTH)
-        elif SpecialCharacters.match(month):
-            raise ValidationErrors.InputError(month, InputErrors.InputErrors.MONTH_CONTAINS_SPECIAL_CHARACTERS)
-        elif Letters.match(month):
-            raise ValidationErrors.InputError(month, InputErrors.InputErrors.MONTH_CONTAINS_LETTER)
-        elif int(month) > 13:
-            raise ValidationErrors.InputError(month, InputErrors.InputErrors.INCORRECT_MONTH_VALUE)
-        elif year == CurrentYear and int(month) <= CurrentMonth:
-            raise ValidationErrors.InputError(month, InputErrors.InputErrors.INCORRECT_MONTH_VALUE)
+            # Validates Month
+            elif int(month) > 12:
+                raise ValidationErrors.InputError(month, InputErrors.InputErrors.INCORRECT_MONTH_VALUE)
+            elif year == CurrentYear and int(month) <= CurrentMonth:
+                raise ValidationErrors.InputError(month, InputErrors.InputErrors.INCORRECT_MONTH_VALUE)
 
-    def validate_state(self, state):
+            # Validates Day
+            elif month in ThirtyDays and int(day) > 30:
+                raise ValidationErrors.InputError(day, InputErrors.InputErrors.INVALID_DAY_IN_MONTH)
+            elif month in ThirtyOneDays and int(day) > 31:
+                raise ValidationErrors.InputError(day, InputErrors.InputErrors.INVALID_DAY_IN_MONTH)
+            elif int(year) % 4 != 0 and int(month) == 2 and int(day) > 28:
+                raise ValidationErrors.InputError(day, InputErrors.InputErrors.INVALID_DAY_IN_MONTH)
+            elif int(year) % 4 == 0 and int(month) == 2 and int(day) > 29:
+                raise ValidationErrors.InputError(day, InputErrors.InputErrors.INVALID_DAY_IN_MONTH)
+            elif year == CurrentYear and month == CurrentMonth and day <= CurrentDay:
+                raise ValidationErrors.InputError(day, InputErrors.InputErrors.INCORRECT_DAY_VALUE)
 
-        if state is None:
-            raise ValidationErrors.InputError(state, InputErrors.InputErrors.STATE_IS_BLANK)
-        elif len(state) != 2:
-            raise ValidationErrors.InputError(state, InputErrors.InputErrors.INCORRECT_STATE_FORMAT)
-        elif SpecialCharacters.match(state):
-            raise ValidationErrors.InputError(state, InputErrors.InputErrors.STATE_CONTAINS_SPECIAL_CHARACTERS)
-        elif state not in States:
-            raise ValidationErrors.InputError(state, InputErrors.InputErrors.INCORRECT_STATE_VALUE)
+    def validate_region(self, region):
+        if region.upper() not in Regions:
+            raise ValidationErrors.InputError(region, InputErrors.InputErrors.INVALID_REGION)
+
+    def validate_prediction_type(self, predictionType):
+        if predictionType.upper() not in PredictionTypes:
+            raise ValidationErrors.InputError(predictionType, InputErrors.InputErrors.INVALID_PREDICTION_TYPE)

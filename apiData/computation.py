@@ -10,7 +10,6 @@ sys.path.append('..')
 from time import mktime
 from datetime import date
 from datetime import timedelta
-import math
 import time
 
 class ComputationClass:
@@ -21,6 +20,7 @@ class ComputationClass:
         value_list = []
         date_squared_list = []
         date_value_list = []
+        date_to_check = 0
 
         try:
             for data in data_set:
@@ -37,6 +37,8 @@ class ComputationClass:
                     # Yearly
                     ordinal_date = ComputationClass.yearlyDateConvert(self, data)
 
+                date_to_check = ComputationClass.convertPredictionDate(prediction_date)
+
                 # Populate lists to be used for computation
                 date_list.append(ordinal_date)
                 date_squared_list.append(pow(float(ordinal_date), 2))
@@ -47,11 +49,15 @@ class ComputationClass:
 
         # Run Linear Regression on data pulled
         compute_return = ComputationClass.linearRegression(self, date_list, value_list, date_value_list,
-                                                           date_squared_list)
+                                                           date_squared_list, date_to_check)
 
         return compute_return
 
     def linearRegression(self, date_list, value_list, date_value_list, date_squared_list, date_to_check):
+
+        slope = ""
+        b = ""
+
         try:
             # Basic computation to be revised
             date_average = sum(date_list) / float(len(date_list))
@@ -138,7 +144,10 @@ class ComputationClass:
         except Exception as e:
             print "Error in Yearly date parsing: ", e
 
-    def convertPredictionDate(self, prediction_date, interval):
+    def convertPredictionDate(self, prediction_date):
+
+        ordinal_date = 0
+
         try:
             # Split and remake string so that it can be parsed
             string_date = prediction_date[:2] + ' ' + prediction_date[2:4] + ' ' + prediction_date[4:]
@@ -149,8 +158,9 @@ class ComputationClass:
             # Convert struct_time into date format
             date_date = date.fromtimestamp(mktime(struct_date))
 
-            # if interval == 'w':
-
+            ordinal_date = date_date.toordinal() - 727657
 
         except Exception as e:
             print "Error converting prediction date: ", e
+
+        return ordinal_date

@@ -28,7 +28,6 @@ try:
     client = MongoClient()
     db = client.eia_data
     #Purge database collections
-    db.dropDatabase()
 except Exception as e:
     print "Mongo error ", e
 
@@ -53,6 +52,7 @@ try:
 
         #Pull name for collection stored in requestURLs object
         collection = db[apiUrl['name']]
+        collection.drop()
 
         #Iterate through XML members to populate documents
         for row in dataRow:
