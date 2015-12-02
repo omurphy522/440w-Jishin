@@ -1,1 +1,1 @@
-author Owen
+__author__ = 'Owen'
