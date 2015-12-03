@@ -2,7 +2,7 @@ from enum import Enum
 
 class constantsclass(Enum):
 
-    AUTHENTICATED = "authusr"
+    INCORRECT_PASSWORD = "WRONG PASSWORD"
 
     WEEKLY_COLLECTIONS = {
         'US': 'us_all_w',
@@ -41,14 +41,5 @@ class constantsclass(Enum):
     }
 
     PREDICTION_TYPES = ['ANNUAL, MONTHLY, WEEKLY']
-
-MENU = {
-    '1: ': 'Predict average price in United States for a specific year.',
-    '2: ': 'Predict average price in United States for a specific month.',
-    '3: ': 'Predict average price in United States for a specific week.',
-    '4: ': 'Predict average price in a region for a specific year.',
-    '5: ': 'Predict average price in a region for a specific month.',
-    '6: ': 'Predict average price in a region for a specific week.',
-    '7: ': 'Exit'
-
-}
+    API_UPDATE ='ApiUpdate'
+    WEB_SERVICE='WebService'

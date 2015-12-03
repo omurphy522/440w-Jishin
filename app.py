@@ -7,7 +7,8 @@ from Token import web_token
 from kerberos import kerberosAuthentication
 from messageQueuing import ceRabbitMqPushMessageFinal
 from messageQueuing import clientRabbitMqPickupMessageFinal
-from ConstantValues import Constants
+from ConstantValues.Constants import constantsclass
+from apiData.computation import ComputationClass
 from queries import queryBuilder
 from Validators import Menu_Validation
 from Errors import ValidationErrors
@@ -25,8 +26,6 @@ class Engine:
             kerberoshandler = kerberosAuthentication.kerberosHandler()
 
             ticket = kerberoshandler.has_kerberos_ticket(username, password)
-            # ticket = True
-            # or if ticket==True: token = ...create_token(username, ticket) else
             token = tokenhandler.create_token(username, ticket)
 
             return token
@@ -35,46 +34,60 @@ class Engine:
 
     def createPrediction(self, token, region, predictionType, date):
 
-        username = jwt.decode(token, 'secret', 'HS256').get('username')
+        username = jwt.decode(token, 'secret', algorithms='HS256').get('username')
+        claims = jwt.decode(token, 'secret', algorithms='HS256').get('claim')
 
-        try:
+        if constantsclass.WEB_SERVICE in claims:
 
-            # validates user input before passing it into query builder
             try:
-                validator = Menu_Validation.Input_Validator()
 
-                validator.validate_date(date)
-                validator.validate_region(region)
-                validator.validate_prediction_type(predictionType)
+                # validates user input before passing it into query builder
+                try:
+                    validator = Menu_Validation.Input_Validator()
 
-            except ValidationErrors.InputError as ve:
-                print ve.msg
+                    validator.validate_date(date)
+                    validator.validate_region(region)
+                    validator.validate_prediction_type(predictionType)
 
-            # Retrieve correct collection from db to make computation
-            query = queryBuilder.queryBuilder()
-            collection = query.retrieveCollection(region, predictionType)
+                except ValidationErrors.InputError as ve:
+                    print ve.msg
 
-            # computation
-            results = ""
+                # Retrieve correct collection from db to make computation
+                query = queryBuilder.queryBuilder()
+                collection = query.retrieveCollection(region, predictionType)
 
-            # rabbitMq
-            messageQueue = ceRabbitMqPushMessageFinal.messageQueue()
-            messageQueue.sendMessage(username, results)
+                # computation
+                computationHandler = ComputationClass()
+                results = computationHandler.computationalCalculations(collection, predictionType, date)
 
-            return True
+                # rabbitMq
+                messageQueue = ceRabbitMqPushMessageFinal.messageQueue()
+                messageQueue.sendMessage(username, results)
 
-        except Exception as e:
-            print e
+                return True
+
+            except Exception as e:
+                print e
+        else:
+            return False
 
 
     def reccieveResults(self, token):
 
-        username = jwt.decode(token, 'secret', 'HS256').get('username')
+        username = jwt.decode(token, 'secret', algorithms='HS256').get('username')
+        claims = jwt.decode(token, 'secret', algorithms='HS256').get('claim')
 
-        try:
-           messageQueue  = clientRabbitMqPickupMessageFinal.messageReceive()
-           results = messageQueue.getMessage(username)
+        if constantsclass.WEB_SERVICE in claims:
 
-        except Exception as e:
-            print e
+            try:
+               messageQueue  = clientRabbitMqPickupMessageFinal.messageReceive()
+               results = messageQueue.getMessage(username)
+               return results
+
+            except Exception as e:
+                print e
+        else:
+            invalidUser = ['You are not authorized to use this service']
+            return invalidUser
+
 
