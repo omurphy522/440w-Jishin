@@ -23,19 +23,26 @@ try:
 			#this basically says if there's no output from klist, there's no ticket and the user must authenticate
 
 				if out == '':
-					subprocess.call(['kinit', username])
+                                     user = subprocess.Popen(['echo', password], stdout=subprocess.PIPE)
+                                     userpass = subprocess.Popen(['kinit', username], stdin = user.stdout)
 				else:
 
-					print('you\'re all good to go')
+					print(username+ ' logged in')
 
 			#if there are no tickets in the kerberos cache...
+                        else:
+                            print('no tickets')
+                            user = subprocess.Popen(['echo', password], stdout=subprocess.PIPE)
+                            userpass = subprocess.Popen(['kinit', username], stdin = user.stdout)
+
+		#	return True
+			list_tick = subprocess.Popen(('klist | grep ' + username), stdout=subprocess.PIPE, shell = True)
+			out, err = list_tick.communicate()
+			if out != '':
+			    return True
 			else:
-				print('no users currently have tickets')
-				username = raw_input('enter username: ')
-				subprocess.call(['kinit',username])
-
-
-			return True
+			    return False
+			
 
 except ImportError as e:
 	print("Broken Impot Statement")
