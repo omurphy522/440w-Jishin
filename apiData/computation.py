@@ -10,6 +10,7 @@ sys.path.append('..')
 from time import mktime
 from datetime import date
 from datetime import timedelta
+from mikeLogging import LoggingFinal as jishinLogging
 import time
 
 class ComputationClass:
@@ -45,7 +46,7 @@ class ComputationClass:
                 value_list.append(float(data['value']))
                 date_value_list.append(ordinal_date * float(data['value']))
         except Exception as e:
-            print "Error in Weekly data parsing: ", e
+            jishinLogging.logger.error("Error in Weekly data parsing: ", e)
 
         # Run Linear Regression on data pulled
         compute_return = ComputationClass.linearRegression(self, date_list, value_list, date_value_list,
@@ -55,8 +56,7 @@ class ComputationClass:
 
     def linearRegression(self, date_list, value_list, date_value_list, date_squared_list, date_to_check):
 
-        slope = ""
-        b = ""
+        outcome = 0
 
         try:
             # Basic computation to be revised
@@ -68,17 +68,18 @@ class ComputationClass:
             slope = ((date_average * value_average) - date_value_average) / (pow(date_average, 2) - date_squared_average)
 
             b = value_average - (slope * date_average)
-        except TypeError:
-            print "Invalid value"
 
-        try:
             outcome = (slope * int(date_to_check)) + b
-        except TypeError:
-            print "Invalid value in user input or outcome"
+
+        except TypeError as e:
+            jishinLogging.logger.error("Invalid value: ", e)
 
         return outcome
 
     def weeklyDateConvert(self, data):
+
+        ordinal_date = 0
+
         try:
             # Get date stored in document
             raw_date = data['date']
@@ -95,11 +96,15 @@ class ComputationClass:
             # Convert date to ordinal format and normalize for computation
             ordinal_date = date_date.toordinal() - 727657  # 4/4/1993
 
-            return ordinal_date
         except Exception as e:
-            print "Error in Weekly date parsing: ", e
+            jishinLogging.logger.error("Error in Weekly date parsing: ", e)
+
+        return ordinal_date
 
     def monthlyDateConvert(self, data):
+
+        ordinal_date = 0
+
         try:
             # Get date stored in document
             raw_date = data['date']
@@ -119,11 +124,15 @@ class ComputationClass:
             # Convert date to ordinal format and normalize for computation
             ordinal_date = date_date.toordinal() - 727667
 
-            return ordinal_date
         except Exception as e:
-            print "Error in Monthly date parsing: ", e
+            jishinLogging.logger.error("Error in Monthly date parsing: ", e)
+
+        return ordinal_date
 
     def yearlyDateConvert(self, data):
+
+        ordinal_date = 0
+
         try:
             # Get date stored in document
             raw_date = data['date']
@@ -140,9 +149,10 @@ class ComputationClass:
             # Convert date to ordinal format and normalize for computation
             ordinal_date = date_date.toordinal() - 727564
 
-            return ordinal_date
         except Exception as e:
-            print "Error in Yearly date parsing: ", e
+            jishinLogging.logger.error("Error in Yearly date parsing: ", e)
+
+        return ordinal_date
 
     def convertPredictionDate(self, prediction_date):
 
@@ -161,6 +171,6 @@ class ComputationClass:
             ordinal_date = date_date.toordinal() - 727657
 
         except Exception as e:
-            print "Error converting prediction date: ", e
+            jishinLogging.logger.error("Error converting prediction date: ", e)
 
         return ordinal_date

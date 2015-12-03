@@ -5,22 +5,20 @@
 # Created: 11/2/2015
 # Modified: 11/18/2015
 
-try:
-    from pymongo import MongoClient
-except ImportError as e:
-    print "Import MongoClient not found"
-try:
-    import urllib2
-except ImportError as e:
-    print "Import urllib2 not found"
+
+from pymongo import MongoClient
+import urllib2
+from xml.etree import ElementTree as ET
+
 try:
     import apiList
 except ImportError as e:
     print "Import local file apiList not found"
-try:
-    from xml.etree import ElementTree as ET
-except ImportError as e:
-    print "Import ElementTree not found"
+
+import sys
+sys.path.append('..')
+from mikeLogging import LoggingFinal as jishinLogging
+
 
 
 class APIParse:
@@ -31,14 +29,14 @@ class APIParse:
             db = client.eia_data
             # Purge database collections
             db.dropDatabase()
-        except Exception as e:
-            print "Mongo error ", e
+        except Exception as dbE:
+            jishinLogging.logger.error("Mongo error ", dbE)
 
         try:
             # Populate requestURLs object with api urls from file
             requestURLs = apiList.getApiUrls()
-        except Exception:
-            print "Method not found"
+        except Exception as apiE:
+            jishinLogging.logger.error("Method not found: ", apiE)
 
         try:
             # Iterate through list of URLs
@@ -57,23 +55,23 @@ class APIParse:
                     post = {"date": date, "value": value}
                     collection.insert_one(post)
         except urllib2.HTTPError:
-            print "Could not download file ", apiUrl['url']
+            jishinLogging.logger.error("Could not download file ", apiUrl['url'])
         except Exception as e:
-            print "Exception: ", e
+            jishinLogging.logger.error("Exception: ", e)
 
     def apiCollectionUpdate(self):
         try:
             # Declare client and database being used
             client = MongoClient()
             db = client.eia_data
-        except Exception as e:
-            print "Mongo error ", e
+        except Exception as dbE:
+            jishinLogging.logger.error("Mongo error: ", dbE)
 
         try:
             # Populate requestURLs object with api urls from file
             requestURLs = apiList.getApiUrls()
-        except Exception:
-            print "Method not found"
+        except Exception as apiE:
+            jishinLogging.logger.error("Method not found: ", apiE)
 
         try:
             # Iterate through list of URLs
@@ -98,18 +96,25 @@ class APIParse:
                         post = {"date": date, "value": value}
                         collection.insert_one(post)
         except urllib2.HTTPError:
-            print "Could not download file ", apiUrl['url']
+            jishinLogging.logger.error("Could not download file ", apiUrl['url'])
         except Exception as e:
-            print "Exception: ", e
+            jishinLogging.logger.error("Exception: ", e)
 
     def parseAPI(self, apiUrl):
-        # Request XML object from API
-        tree = ET.parse(urllib2.urlopen(apiUrl['url']))
 
-        # Parse XML, code would have to change if XML format changes
-        series = tree.find("series")
-        seriesRow = series.find("row")
-        data = seriesRow.find("data")
-        dataRow = data.findall("row")
+        dataRow = ""
+
+        try:
+            # Request XML object from API
+            tree = ET.parse(urllib2.urlopen(apiUrl['url']))
+
+            # Parse XML, code would have to change if XML format changes
+            series = tree.find("series")
+            seriesRow = series.find("row")
+            data = seriesRow.find("data")
+            dataRow = data.findall("row")
+
+        except Exception as e:
+            jishinLogging.logger.error("Exception: " , e)
 
         return dataRow
