@@ -45,7 +45,7 @@ class tokenHandler:
             else:
 
                 jishinLogging.logger.warning('Token Unable To Be Created')
-                return False
+                return "WRONG PASSWORD"
 
         except Exception as e:
 

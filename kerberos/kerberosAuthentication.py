@@ -35,7 +35,14 @@ try:
                             user = subprocess.Popen(['echo', password], stdout=subprocess.PIPE)
                             userpass = subprocess.Popen(['kinit', username], stdin = user.stdout)
 
-			return True
+		#	return True
+			list_tick = subprocess.Popen(('klist | grep ' + username), stdout=subprocess.PIPE, shell = True)
+			out, err = list_tick.communicate()
+			if out != '':
+			    return True
+			else:
+			    return False
+			
 
 except ImportError as e:
 	print("Broken Impot Statement")
