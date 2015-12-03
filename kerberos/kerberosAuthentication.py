@@ -23,7 +23,8 @@ try:
 			#this basically says if there's no output from klist, there's no ticket and the user must authenticate
 
 				if out == '':
-					subprocess.call(['kinit', username])
+					user = subprocess.Popen(['echo ', password], stdout = subprocess.PIPE)
+                                        userpass = subprocess.Popen(['kinit', username], stdin = user.stdout)
 				else:
 
 					print('you\'re all good to go')
@@ -31,9 +32,8 @@ try:
 			#if there are no tickets in the kerberos cache...
 			else:
 				print('no users currently have tickets')
-				username = raw_input('enter username: ')
-				subprocess.call(['kinit',username])
-
+                                user = subprocess.Popen(['echo ', password], stdout = subprocess.PIPE)
+                                userpass = subprocess.Popen(['kinit', username], stdin = user.stdout)
 
 			return True
 
