@@ -17,8 +17,8 @@ render = web.template.Template("$def with (var)\n$:var")
 class SoapService(SimpleWSGISoapApp):
     """Class for webservice """
 
-    @soapmethod(soap_types.String, _returns=soap_types.String)
-    def loginUser(self, username):
+    @soapmethod(soap_types.String, soap_types.String, _returns=soap_types.String)
+    def loginUser(self, username, password):
 
         try:
 
@@ -26,7 +26,7 @@ class SoapService(SimpleWSGISoapApp):
             engine = confidenceEngine.Engine()
 
             # Authenticate and Authorize user
-            token = engine.login(username)
+            token = engine.login(username, password)
 
             return token
 

@@ -9,7 +9,7 @@ try:
 
 	class kerberosHandler:
 
-		def has_kerberos_ticket(self, username):
+		def has_kerberos_ticket(self, username, password):
 
 			#checks to see if tickets are in the KDC
 			if subprocess.call(['klist','-s']) == 0:

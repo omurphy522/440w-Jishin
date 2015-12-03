@@ -17,14 +17,14 @@ from Errors import ValidationErrors
 
 class Engine:
 
-    def login(self, username):
+    def login(self, username, password):
 
         try:
             # Authenticate and authorize user
             tokenhandler = web_token.tokenHandler()
             kerberoshandler = kerberosAuthentication.kerberosHandler()
 
-            ticket = kerberoshandler.has_kerberos_ticket(username)
+            ticket = kerberoshandler.has_kerberos_ticket(username, password)
             # ticket = True
             # or if ticket==True: token = ...create_token(username, ticket) else
             token = tokenhandler.create_token(username, ticket)
