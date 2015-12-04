@@ -48,7 +48,7 @@ class SoapService(SimpleWSGISoapApp):
         except Exception as e:
             print e
 
-    @soapmethod(soap_types.String, _return=soap_types.Array)
+    @soapmethod(soap_types.String, _returns=soap_types.Array(soap_types.String))
     def receivePrediction(self, token):
 
         try:
@@ -56,8 +56,11 @@ class SoapService(SimpleWSGISoapApp):
             engine = confidenceEngine.Engine()
             
             # Calls queue to get results
-            results = engine.reccieveResults(token)
-            return results
+            answer = engine.receiveResults(token)
+	    #print 'receivePrediction %s' % results
+	    count = len(answer)
+	    print count            
+	    return answer
 
         except Exception as e:
             print e

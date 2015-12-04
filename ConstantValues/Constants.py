@@ -5,7 +5,7 @@ class constantsclass(Enum):
     INCORRECT_PASSWORD = "WRONG PASSWORD"
 
     WEEKLY_COLLECTIONS = {
-        'US': 'us_all_w',
+        'US': 'us_w',
         'EAST_COAST': 'eastCoast_w',
         'NEW_ENGLAND': 'newEngland_w',
         'CENTRAL_ATLANTIC': 'centralAtlantic_w',
@@ -17,7 +17,7 @@ class constantsclass(Enum):
     }
 
     MONTHLY_COLLECTIONS = {
-        'US': 'usAll_m',
+        'US': 'us_m',
         'EAST_COAST': 'eastCoast_m',
         'NEW_ENGLAND': 'newEngland_m',
         'CENTRAL_ATLANTIC': 'centralAtlantic_m',
@@ -29,7 +29,7 @@ class constantsclass(Enum):
     }
 
     YEARLY_COLLECTIONS = {
-        'US': 'us_all_a',
+        'US': 'us_a',
         'EAST_COAST': 'eastCoast_a',
         'NEW_ENGLAND': 'newEngland_a',
         'CENTRAL_ATLANTIC': 'centralAtlantic_a',
@@ -40,6 +40,6 @@ class constantsclass(Enum):
         'WEST_COAST': 'westCoast_a'
     }
 
-    PREDICTION_TYPES = ['ANNUAL, MONTHLY, WEEKLY']
-    API_UPDATE ='ApiUpdate'
-    WEB_SERVICE='WebService'
+    PREDICTION_TYPES = ['ANNUAL', 'MONTHLY', 'WEEKLY']
+    API_UPDATE ="ApiUpdate"
+    WEB_SERVICE="WebService"

@@ -27,6 +27,6 @@ class queryBuilder:
 
         collection = queryBuilder.db[region]
 
-        data = collection.find()
+        data = collection.find({},{"_id":0})
 
         return data

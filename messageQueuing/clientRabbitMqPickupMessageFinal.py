@@ -9,6 +9,7 @@ sys.path.append('..')
 import pika
 from mikeLogging import LoggingFinal as jishinLogging
 from pika.exceptions import *
+from Errors import ValidationErrors, InputErrors
 
 
 class messageReceive:
@@ -26,27 +27,25 @@ class messageReceive:
 
             # For method gets all messages from the queue and prints them one at a time
             while True:
+
                 method_frame, header_frame, body = channel.basic_get(queue=queue)
                 # print method_frame, header_frame, body
-                # print body
-                channel.basic_ack(method_frame.delivery_tag)
-                messageList.append(body)
-                jishinLogging.logger.info('Message Received For User:  %s' % queue)
-                break
+                if method_frame:
+                    channel.basic_ack(method_frame.delivery_tag)
+                    messageList.append(body)
+                    jishinLogging.logger.info('Message Received For User:  %s' % queue)
+                    break 
+                else:
+                    raise ValidationErrors.noTagError(method_frame, InputErrors.InputErrors.NO_TAG_ERROR)
+
             return messageList
 
 
-        except ValueError as e:
-            # handler_logging.logger.error('No Connection Made')
-            print('No Connection Made')
-        except Exception as e:
-            jishinLogging.logger.error('Error in receive Client')
-            print ("Error in Receive Client")
-        except AMQPError as e:
-            jishinLogging.logger.error(e.message)
+
         except AMQPConnectionError as e:
-            jishinLogging.logger.error(e.message)
+            jishinLogging.logger.error('AMPQ Connection Error %s' % e.message)
         except ProtocolSyntaxError as e:
-            jishinLogging.logger.error(e.message)
+            jishinLogging.logger.error('Protocol Syntax Error %s' % e.message)
         except UnsupportedAMQPFieldException as e:
-            jishinLogging.logger.error(e.message)
+            jishinLogging.logger.error('Unsupported AMPQ Exception %s' % e.message)
+

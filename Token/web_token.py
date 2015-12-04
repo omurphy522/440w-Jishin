@@ -20,7 +20,7 @@ class tokenHandler:
            # databasePayload = collection.find({'username': username}, {'_id': 0, 'claims': 1})
             databasePayload = collection.distinct("claims", {"username": username})
 	    print databasePayload
-            claim ={'claim': databasePayload}
+            claim ={'username': username, 'claim': databasePayload}
             print claim
 	    
 	    # value = json.dumps(claim)
