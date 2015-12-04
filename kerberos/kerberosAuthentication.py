@@ -1,51 +1,55 @@
 #!/usr/bin/python
 try:
 
-	import subprocess
-	import os
-	import sys
-	sys.path.append('..')
-	from ConstantValues.Constants import constantsclass
+    import subprocess
+    import os
+    import sys
+    from mikeLogging import LoggingFinal as jishinLogging
 
-	class kerberosHandler:
+    sys.path.append('..')
+    from ConstantValues.Constants import constantsclass
 
-		def has_kerberos_ticket(self, username, password):
 
-			#checks to see if tickets are in the KDC
-			if subprocess.call(['klist','-s']) == 0:
+    class kerberosHandler:
 
-			#checks to see if specified username is active in klist
-				list_tick = subprocess.Popen(('klist | grep ' + username), stdout=subprocess.PIPE, shell = True)
+        def has_kerberos_ticket(self, username, password):
 
-			#stores the ouput of list_tick into variable 'out'
-				out, err = list_tick.communicate()
+            # checks to see if tickets are in the KDC
+            if subprocess.call(['klist', '-s']) == 0:
 
-			#this basically says if there's no output from klist, there's no ticket and the user must authenticate
+                # checks to see if specified username is active in klist
+                list_tick = subprocess.Popen(('klist | grep ' + username), stdout=subprocess.PIPE, shell=True)
 
-				if out == '':
-                                     user = subprocess.Popen(['echo', password], stdout=subprocess.PIPE)
-                                     userpass = subprocess.Popen(['kinit', username], stdin = user.stdout)
-				else:
+                # stores the ouput of list_tick into variable 'out'
+                out, err = list_tick.communicate()
 
-					print(username+ ' logged in')
+                # this basically says if there's no output from klist, there's no ticket and the user must authenticate
 
-			#if there are no tickets in the kerberos cache...
-                        else:
-                            print('no tickets')
-                            user = subprocess.Popen(['echo', password], stdout=subprocess.PIPE)
-                            userpass = subprocess.Popen(['kinit', username], stdin = user.stdout)
+                if out == '':
+                    user = subprocess.Popen(['echo', password], stdout=subprocess.PIPE)
+                    userpass = subprocess.Popen(['kinit', username], stdin=user.stdout)
+                else:
 
-		#	return True
-			list_tick = subprocess.Popen(('klist | grep ' + username), stdout=subprocess.PIPE, shell = True)
-			out, err = list_tick.communicate()
-			if out != '':
-			    return True
-			else:
-			    return False
-			
+                    jishinLogging.logger.info(username + ' logged in')
+
+            # if there are no tickets in the kerberos cache...
+            else:
+                print('no tickets')
+                user = subprocess.Popen(['echo', password], stdout=subprocess.PIPE)
+                userpass = subprocess.Popen(['kinit', username], stdin=user.stdout)
+
+            #	return True
+            list_tick = subprocess.Popen(('klist | grep ' + username), stdout=subprocess.PIPE, shell=True)
+            out, err = list_tick.communicate()
+            if out != '':
+                return True
+            else:
+                return False
+
 
 except ImportError as e:
-	print("Broken Impot Statement")
+    jishinLogging.logger.error("Broken Import Statement Kerberos %s" %e)
 
-except IOError as (errno,strerror):
-	print("IOError")
+except IOError as (errno, strerror):
+    jishinLogging.logger.error("IOError Kerberos: %s" %e)
+
