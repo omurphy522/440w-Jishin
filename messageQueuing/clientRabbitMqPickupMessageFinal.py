@@ -37,7 +37,7 @@ class messageReceive:
                     break
                 else:
                     raise ValidationErrors.noTagError(method_frame, InputErrors.InputErrors.NO_TAG_ERROR)
-
+	    print messageList
             return messageList
 
 
