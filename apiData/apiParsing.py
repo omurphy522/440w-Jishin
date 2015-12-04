@@ -95,6 +95,8 @@ class APIParse:
                         value = row.find('value').text
                         post = {"date": date, "value": value}
                         collection.insert_one(post)
+
+                        return True
         except urllib2.HTTPError:
             jishinLogging.logger.error("Could not download file ", apiUrl['url'])
         except Exception as e:

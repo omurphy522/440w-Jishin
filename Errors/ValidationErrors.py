@@ -1,4 +1,7 @@
-__author__ = 'Osei'
+# Filename: ValidationErrors.py
+# Author: Osei Seraphin
+# Course: IST 440w
+# Instructor: Professor Oakes
 
 
 class InputError(Exception):
