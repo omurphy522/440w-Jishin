@@ -23,7 +23,8 @@ class messageQueue:
             # Declare the queue
             channel.queue_declare(queue=username, durable=True, exclusive=False, auto_delete=False)
 
-            # Turn on delivery confirmations
+            print "creating queue %s" % results
+	    # Turn on delivery confirmations
             channel.confirm_delivery()
 
             # Send a message
@@ -34,6 +35,7 @@ class messageQueue:
                                                                      delivery_mode=2),
                                      mandatory=True):
                 jishinLogging.logger.info('Message Sent By %s' % username)
+		print results
                 return results
             else:
                jishinLogging.logger.warning('Message Could Not Be Confirmed')

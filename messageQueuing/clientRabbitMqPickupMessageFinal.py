@@ -34,7 +34,7 @@ class messageReceive:
                     channel.basic_ack(method_frame.delivery_tag)
                     messageList.append(body)
                     jishinLogging.logger.info('Message Received For User:  %s' % queue)
-                    break
+                    break 
                 else:
                     raise ValidationErrors.noTagError(method_frame, InputErrors.InputErrors.NO_TAG_ERROR)
 

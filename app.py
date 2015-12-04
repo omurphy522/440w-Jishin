@@ -60,14 +60,14 @@ class Engine:
                 # computation
                     computationHandler = ComputationClass()
 		    print collection, predictionType, date
-                    results = computationHandler.computationalCalculations(collection, predictionType, date)
+                    results =str(computationHandler.computationalCalculations(collection, predictionType, date))
 		    print results
 		except Exception as e:
 		    jishinLogging.logger.error('Computation %s' %e)
 		
                 # rabbitMq
-                    messageQueue = ceRabbitMqPushMessageFinal.messageQueue()
-                    messageQueue.sendMessage(username, results)
+                messageQueue = ceRabbitMqPushMessageFinal.messageQueue()
+                messageQueue.sendMessage(username, results)
 
                 return True
 
@@ -80,15 +80,19 @@ class Engine:
     def receiveResults(self, token):
 
         username = jwt.decode(token, 'secret', algorithms='HS256').get('username')
-        print username
+        print 'THIS IS HERE %s' % username
 	claims = jwt.decode(token, 'secret', algorithms='HS256').get('claim')
 
         if constantsclass.WEB_SERVICE in claims:
 
             try:
+	       messageQueue = ''
                messageQueue  = clientRabbitMqPickupMessageFinal.messageReceive()
                results = messageQueue.getMessage(username)
-               return results
+               jishinLogging.logger.info('Results Returned %s' %results)
+	       for item in results:
+		   print ('Results Returned %s' %item)
+	       return results
 
             except Exception as e:
 		jishinLogging.logger.error('Error Recieving Results: %s'% e)
@@ -96,6 +100,4 @@ class Engine:
         else:
             invalidUser = ['You are not authorized to use this service']
             return invalidUser
-
-
 
