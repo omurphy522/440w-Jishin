@@ -13,7 +13,7 @@ CurrentMonth = datetime.now().month
 CurrentDay = datetime.now().day
 Regions = ['US', 'EAST_COAST', 'NEW_ENGLAND', 'CENTRAL_ATLANTIC', 'LOWER_ATLANTIC', 'MIDWEST', 'GULF_COAST',
            'ROCK_MOUNTAINS', 'WEST_COAST']
-PredictionTypes = constantsclass.PREDICTION_TYPES
+PredictionTypes = ['ANNUAL', 'MONTHLY', 'WEEKLY']
 
 class Input_Validator:
 

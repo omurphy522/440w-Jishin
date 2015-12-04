@@ -56,7 +56,7 @@ class SoapService(SimpleWSGISoapApp):
             engine = confidenceEngine.Engine()
             
             # Calls queue to get results
-            results = engine.reccieveResults(token)
+            results = engine.receiveResults(token)
             return results
 
         except Exception as e:

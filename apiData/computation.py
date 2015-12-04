@@ -3,7 +3,7 @@
 # Course: IST 440W
 # Professor: Senior Lecturer Joseph Oakes
 # Created: 10/19/2015
-# Modified: 11/18/2015
+# Modified: 12/03/2015
 
 import sys
 sys.path.append('..')
@@ -14,45 +14,6 @@ from mikeLogging import LoggingFinal as jishinLogging
 import time
 
 class ComputationClass:
-
-    def computationalCalculations(self, data_set, interval, prediction_date):
-
-        date_list = []
-        value_list = []
-        date_squared_list = []
-        date_value_list = []
-        date_to_check = 0
-
-        try:
-            for data in data_set:
-
-                if interval == 'w':
-                    # Weekly
-                    ordinal_date = ComputationClass.weeklyDateConvert(self, data)
-
-                elif interval == 'm':
-                    # Monthly
-                    ordinal_date = ComputationClass.monthlyDateConvert(self, data)
-
-                elif interval == 'a':
-                    # Yearly
-                    ordinal_date = ComputationClass.yearlyDateConvert(self, data)
-
-                date_to_check = ComputationClass.convertPredictionDate(prediction_date)
-
-                # Populate lists to be used for computation
-                date_list.append(ordinal_date)
-                date_squared_list.append(pow(float(ordinal_date), 2))
-                value_list.append(float(data['value']))
-                date_value_list.append(ordinal_date * float(data['value']))
-        except Exception as e:
-            jishinLogging.logger.error("Error in Weekly data parsing: ", e)
-
-        # Run Linear Regression on data pulled
-        compute_return = ComputationClass.linearRegression(self, date_list, value_list, date_value_list,
-                                                           date_squared_list, date_to_check)
-
-        return compute_return
 
     def linearRegression(self, date_list, value_list, date_value_list, date_squared_list, date_to_check):
 
@@ -72,7 +33,7 @@ class ComputationClass:
             outcome = (slope * int(date_to_check)) + b
 
         except TypeError as e:
-            jishinLogging.logger.error("Invalid value: ", e)
+            jishinLogging.logger.error("Invalid value: %s" % e)
 
         return outcome
 
@@ -97,7 +58,7 @@ class ComputationClass:
             ordinal_date = date_date.toordinal() - 727657  # 4/4/1993
 
         except Exception as e:
-            jishinLogging.logger.error("Error in Weekly date parsing: ", e)
+            jishinLogging.logger.error("Error in Weekly date parsing: %s " % e)
 
         return ordinal_date
 
@@ -125,7 +86,7 @@ class ComputationClass:
             ordinal_date = date_date.toordinal() - 727667
 
         except Exception as e:
-            jishinLogging.logger.error("Error in Monthly date parsing: ", e)
+            jishinLogging.logger.error("Error in Monthly date parsing: %s " % e)
 
         return ordinal_date
 
@@ -150,7 +111,7 @@ class ComputationClass:
             ordinal_date = date_date.toordinal() - 727564
 
         except Exception as e:
-            jishinLogging.logger.error("Error in Yearly date parsing: ", e)
+            jishinLogging.logger.error("Error in Yearly date parsing: %s " % e)
 
         return ordinal_date
 
@@ -171,6 +132,46 @@ class ComputationClass:
             ordinal_date = date_date.toordinal() - 727657
 
         except Exception as e:
-            jishinLogging.logger.error("Error converting prediction date: ", e)
+            jishinLogging.logger.error("Error converting prediction date: %s" % e)
 
         return ordinal_date
+
+    def computationalCalculations(self, data_set, interval, prediction_date):
+
+        date_list = []
+        value_list = []
+        date_squared_list = []
+        date_value_list = []
+        date_to_check = 0
+
+        try:
+            for item in data_set:
+                if interval == 'WEEKLY':
+                    # Weekly
+                    ordinal_date = self.weeklyDateConvert(item)
+
+                elif interval == 'MONTHLY':
+                    # Monthly
+                    ordinal_date = self.monthlyDateConvert(item)
+
+                elif interval == 'ANNUAL':
+                    # Yearly
+                    ordinal_date = self.yearlyDateConvert(item)
+
+                # Populate lists to be used for computation
+                date_list.append(ordinal_date)
+                date_squared_list.append(pow(float(ordinal_date), 2))
+                value_list.append(float(item['value']))
+                date_value_list.append(ordinal_date * float(item['value']))
+
+            date_to_check = self.convertPredictionDate(prediction_date)
+
+        except Exception as e:
+            jishinLogging.logger.error('Error in Weekly data parsing: %s ' % e)
+
+        # Run Linear Regression on data pulled
+        compute_return = self.linearRegression(date_list, value_list, date_value_list,
+                                                           date_squared_list, date_to_check)
+        print compute_return
+        return compute_return
+

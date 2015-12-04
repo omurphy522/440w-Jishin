@@ -28,10 +28,10 @@ class messageQueue_tests(unittest.TestCase):
         self.assertEqual(count, 1)
 
     def test_message_send_receive_fail(self):
-        self.assertRaises(Exception, testReceive.getMessage(username))
+        self.assertRaises(Exception, testReceive.getMessage, username)
 
     def test_no_queue(self):
-        self.assertRaises(Exception, testReceive.getMessage(nonexistQueue))
+        self.assertRaises(Exception, testReceive.getMessage, nonexistQueue)
 
 
 if __name__=='__main__':

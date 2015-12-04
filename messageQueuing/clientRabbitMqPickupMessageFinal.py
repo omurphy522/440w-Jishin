@@ -38,10 +38,10 @@ class messageReceive:
 
         except ValueError as e:
             # handler_logging.logger.error('No Connection Made')
-            print('No Connection Made')
+            print('No Connection Made %s' %e)
         except Exception as e:
-            jishinLogging.logger.error('Error in receive Client')
-            print ("Error in Receive Client")
+            jishinLogging.logger.error('Error in receive Client: %s' % e)
+            print ("Error in Receive Client %s"  % e)
         except AMQPError as e:
             jishinLogging.logger.error(e.message)
         except AMQPConnectionError as e:
