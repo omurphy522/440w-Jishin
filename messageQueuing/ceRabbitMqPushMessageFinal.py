@@ -30,7 +30,7 @@ class messageQueue:
             # Send a message
             if channel.basic_publish(exchange='',
                                      routing_key=username,
-                                     body=results + date + region + predicitonType,
+                                     body='Gas will cost aproximatley '+results+' on '+date+' in '+region+' if using '+predicitonType+' costs.',
                                      properties=pika.BasicProperties(content_type='text/plain',
                                                                      delivery_mode=2),
                                      mandatory=True):
