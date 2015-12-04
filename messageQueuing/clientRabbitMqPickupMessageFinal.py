@@ -5,6 +5,7 @@
 # Instructor: Professor Oakes
 
 import sys
+
 sys.path.append('..')
 import pika
 from mikeLogging import LoggingFinal as jishinLogging
@@ -13,7 +14,6 @@ from Errors import ValidationErrors, InputErrors
 
 
 class messageReceive:
-
     def getMessage(self, username):
 
         # try catch to log errors
@@ -34,7 +34,7 @@ class messageReceive:
                     channel.basic_ack(method_frame.delivery_tag)
                     messageList.append(body)
                     jishinLogging.logger.info('Message Received For User:  %s' % queue)
-                    break 
+                    break
                 else:
                     raise ValidationErrors.noTagError(method_frame, InputErrors.InputErrors.NO_TAG_ERROR)
 
@@ -48,4 +48,3 @@ class messageReceive:
             jishinLogging.logger.error('Protocol Syntax Error %s' % e.message)
         except UnsupportedAMQPFieldException as e:
             jishinLogging.logger.error('Unsupported AMPQ Exception %s' % e.message)
-

@@ -172,6 +172,6 @@ class ComputationClass:
         # Run Linear Regression on data pulled
         compute_return = self.linearRegression(date_list, value_list, date_value_list,
                                                            date_squared_list, date_to_check)
-        print compute_return
+
         return compute_return
 

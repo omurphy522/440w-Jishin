@@ -1,6 +1,7 @@
 __author__ = 'Osei'
 
 import sys
+
 sys.path.append('..')
 import jwt
 from Token import web_token
@@ -15,8 +16,8 @@ from Errors import ValidationErrors
 from bson.json_util import *
 from mikeLogging import LoggingFinal as jishinLogging
 
-class Engine:
 
+class Engine:
     def login(self, username, password):
 
         try:
@@ -29,14 +30,12 @@ class Engine:
 
             return token
         except Exception as e:
-            print e
-            jishinLogging.logger.error('Error Logging In: %s' %  e)
+            jishinLogging.logger.error('Error Logging In: %s' % e)
 
     def createPrediction(self, token, region, predictionType, date):
 
         username = jwt.decode(token, 'secret', algorithms='HS256').get('username')
         claims = dumps(jwt.decode(token, 'secret', algorithms='HS256').get('claim'))
-        print claims
         if constantsclass.WEB_SERVICE in claims:
 
             try:
@@ -51,23 +50,23 @@ class Engine:
 
                 except ValidationErrors.InputError as ve:
                     jishinLogging.logger.error('Validation Error %s' % ve)
-		    print ve.msg
+
 
                 # Retrieve correct collection from db to make computation
                 query = queryBuilder.queryBuilder()
                 collection = query.retrieveCollection(region, predictionType)
-		try:
-                # computation
+                try:
+                    # computation
                     computationHandler = ComputationClass()
-		    print collection, predictionType, date
-                    results =str(computationHandler.computationalCalculations(collection, predictionType, date))
-		    print results
-		except Exception as e:
-		    jishinLogging.logger.error('Computation %s' %e)
-		
+
+                    results = str(computationHandler.computationalCalculations(collection, predictionType, date))
+
+                except Exception as e:
+                    jishinLogging.logger.error('Computation %s' % e)
+
                 # rabbitMq
                 messageQueue = ceRabbitMqPushMessageFinal.messageQueue()
-                messageQueue.sendMessage(username, results)
+                messageQueue.sendMessage(username, results, date, region, predictionType)
 
                 return True
 
@@ -76,28 +75,24 @@ class Engine:
         else:
             return False
 
-
     def receiveResults(self, token):
 
         username = jwt.decode(token, 'secret', algorithms='HS256').get('username')
-        print 'THIS IS HERE %s' % username
-	claims = jwt.decode(token, 'secret', algorithms='HS256').get('claim')
+        claims = jwt.decode(token, 'secret', algorithms='HS256').get('claim')
 
         if constantsclass.WEB_SERVICE in claims:
 
             try:
-	       messageQueue = ''
-               messageQueue  = clientRabbitMqPickupMessageFinal.messageReceive()
-               results = messageQueue.getMessage(username)
-               jishinLogging.logger.info('Results Returned %s' %results)
-	       for item in results:
-		   print ('Results Returned %s' %item)
-	       return results
+                messageQueue = ''
+                messageQueue = clientRabbitMqPickupMessageFinal.messageReceive()
+                results = messageQueue.getMessage(username)
+                jishinLogging.logger.info('Results Returned To %s' % username)
+
+                return results
 
             except Exception as e:
-		jishinLogging.logger.error('Error Recieving Results: %s'% e)
-                print e
+                jishinLogging.logger.error('Error Recieving Results: %s' % e)
+
         else:
             invalidUser = ['You are not authorized to use this service']
             return invalidUser
-
