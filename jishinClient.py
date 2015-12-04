@@ -14,7 +14,7 @@ messages = ''
 jishin = make_service_client('http://localhost:8080/loginUser', jishinService())
 
 token = jishin.loginUser(username, password)
-print token
+
 
 if token == constantsclass.INCORRECT_PASSWORD:
     token = jishin.loginUser(username, password)
