@@ -1,7 +1,7 @@
 __author__ = 'Osei'
 
-
 import sys
+
 sys.path.append('..')
 import app as confidenceEngine
 import web
@@ -13,6 +13,7 @@ urls = ("/loginUser", "jishinService",
         "/createPrediction", "jishinService",
         "/receivePrediction", "jishinService")
 render = web.template.Template("$def with (var)\n$:var")
+
 
 class SoapService(SimpleWSGISoapApp):
     """Class for webservice """
@@ -41,7 +42,7 @@ class SoapService(SimpleWSGISoapApp):
             engine = confidenceEngine.Engine()
 
             # Calls prediction method based on values passed on
-            prediction = engine.createPrediction(token, region, predictionType, date )
+            prediction = engine.createPrediction(token, region, predictionType, date)
 
             return prediction
 
@@ -54,13 +55,11 @@ class SoapService(SimpleWSGISoapApp):
         try:
 
             engine = confidenceEngine.Engine()
-            
+
             # Calls queue to get results
             answer = engine.receiveResults(token)
-	    #print 'receivePrediction %s' % results
-	    count = len(answer)
-	    print count            
-	    return answer
+
+            return answer
 
         except Exception as e:
             print e
@@ -68,7 +67,8 @@ class SoapService(SimpleWSGISoapApp):
 
 class jishinService(SoapService):
     """Class for web.py """
-    def start_response(self,status, headers):
+
+    def start_response(self, status, headers):
         web.ctx.status = status
         for header, value in headers:
             web.header(header, value)
@@ -80,6 +80,7 @@ class jishinService(SoapService):
     def POST(self):
         response = super(SimpleWSGISoapApp, self).__call__(web.ctx.environ, self.start_response)
         return render("\n".join(response))
+
 
 app = web.application(urls, globals())
 

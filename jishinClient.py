@@ -1,6 +1,7 @@
 __author__ = 'Osei'
 
 import sys
+
 sys.path.append('..')
 from soaplib.client import make_service_client
 from jishinServer import jishinService
@@ -21,16 +22,13 @@ if token == constantsclass.INCORRECT_PASSWORD:
 else:
     region = raw_input('Enter the region would you like to predict for: ')
     predictionType = raw_input('Enter the  type of prediction would you like to make: ')
-    date = raw_input('Enter the date ')
+    date = raw_input('Enter the date: ')
 
     prediction = jishin.createPrediction(token, region, predictionType, date)
     if prediction:
-	messages = jishin.receivePrediction(token)
-	count = len(messages)
-	print count
-        print messages
+        messages = jishin.receivePrediction(token)
 
-	for m in messages:
+        for m in messages:
             print m
     else:
         print 'Forbidden'
