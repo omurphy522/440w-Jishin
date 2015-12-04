@@ -23,3 +23,6 @@ class InputErrors(Enum):
 
     # Prediction Type Errors
     INVALID_PREDICTION_TYPE = 'Please select whether you want an Anual, Monthly, or Weekly prediction'
+
+    # RabbitMQ Error
+    NO_TAG_ERROR = "No Delivery Tag"

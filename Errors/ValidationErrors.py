@@ -7,3 +7,9 @@ class InputError(Exception):
         self.expr = expr
         self.msg = msg
 
+
+class noTagError(Exception):
+
+    def __init__(self, expr, msg):
+        self.expr = expr
+        self.msg = msg

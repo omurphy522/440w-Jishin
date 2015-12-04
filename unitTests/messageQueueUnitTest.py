@@ -9,6 +9,8 @@ sys.path.append('..')
 from messageQueuing import ceRabbitMqPushMessageFinal
 from messageQueuing import clientRabbitMqPickupMessageFinal
 import unittest
+from pika.exceptions import *
+from Errors import ValidationErrors
 
 testQueue = ceRabbitMqPushMessageFinal.messageQueue()
 testReceive = clientRabbitMqPickupMessageFinal.messageReceive()
@@ -28,10 +30,10 @@ class messageQueue_tests(unittest.TestCase):
         self.assertEqual(count, 1)
 
     def test_message_send_receive_fail(self):
-        self.assertRaises(Exception, testReceive.getMessage, username)
+        self.assertRaises(ValidationErrors.noTagError, testReceive.getMessage, username)
 
     def test_no_queue(self):
-        self.assertRaises(Exception, testReceive.getMessage, nonexistQueue)
+        self.assertRaises(ChannelClosed, testReceive.getMessage, nonexistQueue)
 
 
 if __name__=='__main__':
