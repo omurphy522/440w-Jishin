@@ -24,8 +24,8 @@ try:
     else:
         # Call API Update Script
         update = jishin.updateApi(token)
-        if update == 'You are not authorized to use this service':
-            print update
+        if update == False:
+            print 'Update Unsuccessful'
         else:
             print 'Update Successful'
 except Exception as e:

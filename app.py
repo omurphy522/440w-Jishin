@@ -109,7 +109,7 @@ class Engine:
         username = jwt.decode(token, 'secret', algorithms='HS256').get('username')
         claims = jwt.decode(token, 'secret', algorithms='HS256').get('claim')
 
-        if constantsclass.WEB_SERVICE in claims:
+        if constantsclass.API_UPDATE in claims:
 
             try:
                 updater = apiParsing.APIParse()
@@ -121,5 +121,5 @@ class Engine:
                 jishinLogging.logger.error('Error Running Update: %s by User: %s' %(e, username))
 
         else:
-            invalidUser = 'You are not authorized to use this service'
-            return invalidUser
+            
+            return False

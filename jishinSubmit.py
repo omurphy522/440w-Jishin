@@ -28,7 +28,7 @@ else:
 
     prediction = jishin.createPrediction(token, region, predictionType, date)
     if prediction:
-        time = datetime.now().time()
+        time = datetime.now()
         print 'Submitted %s' % time
     else:
         print 'Query Not Submitted'

@@ -71,7 +71,7 @@ class SoapService(SimpleWSGISoapApp):
             jishinLogging.logger.error('Receive Prediction %s' %e)
 
 
-    @soapmethod(soap_types.String, _returns=soap_types.Any)
+    @soapmethod(soap_types.String, _returns=soap_types.Boolean)
     def updateApi(self, token):
 
         try:

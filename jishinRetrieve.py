@@ -26,5 +26,5 @@ else:
             for m in messages:
             	print m
         else:
-            print 'No Messages In Queue'
+            print 'No More Messages In Queue'
   
