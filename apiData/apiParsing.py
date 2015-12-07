@@ -17,7 +17,7 @@ except ImportError as e:
 
 import sys
 sys.path.append('..')
-from mikeLogging import LoggingFinal as jishinLogging
+from jishinLogging import LoggingFinal as jishinLogging
 
 
 

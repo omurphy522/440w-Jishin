@@ -8,7 +8,7 @@ import sys
 
 sys.path.append('..')
 import pika
-from mikeLogging import LoggingFinal as jishinLogging
+from jishinLogging import LoggingFinal as jishinLogging
 from pika.exceptions import *
 from Errors import ValidationErrors, InputErrors
 

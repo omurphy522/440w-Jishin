@@ -10,7 +10,7 @@ sys.path.append('..')
 from time import mktime
 from datetime import date
 from datetime import timedelta
-from mikeLogging import LoggingFinal as jishinLogging
+from jishinLogging import LoggingFinal as jishinLogging
 import time
 
 class ComputationClass:

@@ -17,7 +17,7 @@ from apiData import apiParsing
 from queries import queryBuilder
 from Validators import jishinValidator
 from Errors import ValidationErrors
-from mikeLogging import LoggingFinal as jishinLogging
+from jishinLogging import LoggingFinal as jishinLogging
 
 
 class Engine:
@@ -61,12 +61,10 @@ class Engine:
                 # Retrieve correct collection from db to make computation
                 query = queryBuilder.queryBuilder()
                 collection = query.retrieveCollection(region, predictionType)
-                try:
+		try:
                     # computation
                     computationHandler = ComputationClass()
-
                     results = str(computationHandler.computationalCalculations(collection, predictionType, date))
-
                     # rabbitMq
                     messageQueue = ceRabbitMqPushMessageFinal.messageQueue()
                     messageQueue.sendMessage(username, results, date, region, predictionType)

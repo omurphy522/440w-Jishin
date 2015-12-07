@@ -6,6 +6,7 @@
 from Errors import InputErrors
 from Errors import ValidationErrors
 import re
+from datetime import datetime
 
 SpecialCharacters = re.compile(r'[<>/{}[\]~`]')
 Letters = re.compile(r'[a-zA-Z]')
@@ -30,10 +31,15 @@ class Input_Validator:
         self.errors.append(e)
 
     def validate_date(self, currentdate, date):
-
-        CurrentDay = int(currentdate.day)
-        CurrentMonth = int(currentdate.month)
-        CurrentYear = int(currentdate.year)
+	print "currentdate: %s" % currentdate
+	parsedDate = datetime.strptime(currentdate, '%Y-%m-%d').date()
+        print parsedDate
+	CurrentDay = int(parsedDate.day)
+	print CurrentDay
+        CurrentMonth = int(parsedDate.month)
+	print CurrentMonth
+        CurrentYear = int(parsedDate.year)
+	print CurrentYear
 
         if len(date) != 8:
             self.add_error(ValidationErrors.InputError(date, InputErrors.InputErrors.INCORRECT_DATE_LENGTH))
@@ -59,7 +65,7 @@ class Input_Validator:
             elif month > 12:
                 self.add_error(ValidationErrors.InputError(month, InputErrors.InputErrors.INCORRECT_MONTH_VALUE))
                 raise ValidationErrors.InputError(month, InputErrors.InputErrors.INCORRECT_MONTH_VALUE)
-            elif year == CurrentYear and month <= CurrentMonth:
+            elif year == CurrentYear and month < CurrentMonth:
                 self.add_error(ValidationErrors.InputError(month, InputErrors.InputErrors.INVALID_MONTH))
                 raise ValidationErrors.InputError(month, InputErrors.InputErrors.INVALID_MONTH)
 
