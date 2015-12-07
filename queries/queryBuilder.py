@@ -1,8 +1,11 @@
-__author__ = 'Osei'
+# Filename: queryBuilder.py
+# Author: Osei Seraphin
+# Course: IST 440w
+# Instructor: Professor Oakes
 
-import pymongo
 from pymongo import MongoClient
 from ConstantValues.Constants import constantsclass
+
 
 class queryBuilder:
 

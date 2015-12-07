@@ -1,8 +1,11 @@
-__author__ = 'Osei'
+# Filename: app.py
+# Author: Osei Seraphin
+# Course: IST 440w
+# Instructor: Professor Oakes
 
 import sys
-
 sys.path.append('..')
+
 import jwt
 from Token import web_token
 from kerberos import kerberosAuthentication
@@ -10,10 +13,10 @@ from messageQueuing import ceRabbitMqPushMessageFinal
 from messageQueuing import clientRabbitMqPickupMessageFinal
 from ConstantValues.Constants import constantsclass
 from apiData.computation import ComputationClass
+from apiData import apiParsing
 from queries import queryBuilder
-from Validators import Menu_Validation
+from Validators import jishinValidator
 from Errors import ValidationErrors
-from bson.json_util import *
 from mikeLogging import LoggingFinal as jishinLogging
 
 
@@ -35,22 +38,25 @@ class Engine:
     def createPrediction(self, token, region, predictionType, date):
 
         username = jwt.decode(token, 'secret', algorithms='HS256').get('username')
-        claims = dumps(jwt.decode(token, 'secret', algorithms='HS256').get('claim'))
+        claims = jwt.decode(token, 'secret', algorithms='HS256').get('claim')
+        currentDate = jwt.decode(token, 'secret', algorithms='HS256').get('dateIssued')
+
         if constantsclass.WEB_SERVICE in claims:
 
             try:
-
+                validator = jishinValidator.Input_Validator()
                 # validates user input before passing it into query builder
                 try:
-                    validator = Menu_Validation.Input_Validator()
 
-                    validator.validate_date(date)
+                    validator.validate_date(currentDate, date)
                     validator.validate_region(region)
                     validator.validate_prediction_type(predictionType)
 
                 except ValidationErrors.InputError as ve:
                     jishinLogging.logger.error('Validation Error %s' % ve)
-
+                    for e in validator.errors:
+                        jishinLogging.logger.error(e)
+                    print ve.msg
 
                 # Retrieve correct collection from db to make computation
                 query = queryBuilder.queryBuilder()
@@ -61,12 +67,12 @@ class Engine:
 
                     results = str(computationHandler.computationalCalculations(collection, predictionType, date))
 
+                    # rabbitMq
+                    messageQueue = ceRabbitMqPushMessageFinal.messageQueue()
+                    messageQueue.sendMessage(username, results, date, region, predictionType)
+
                 except Exception as e:
                     jishinLogging.logger.error('Computation %s' % e)
-
-                # rabbitMq
-                messageQueue = ceRabbitMqPushMessageFinal.messageQueue()
-                messageQueue.sendMessage(username, results, date, region, predictionType)
 
                 return True
 
@@ -92,6 +98,27 @@ class Engine:
 
             except Exception as e:
                 jishinLogging.logger.error('Error Recieving Results: %s' % e)
+
+        else:
+            invalidUser = ['You are not authorized to use this service']
+            return invalidUser
+
+
+    def apiUpdate(self, token):
+
+        username = jwt.decode(token, 'secret', algorithms='HS256').get('username')
+        claims = jwt.decode(token, 'secret', algorithms='HS256').get('claim')
+
+        if constantsclass.WEB_SERVICE in claims:
+
+            try:
+                updater = apiParsing.APIParse()
+                updater.apiCollectionUpdate()
+
+                return True
+
+            except Exception as e:
+                jishinLogging.logger.error('Error Running Update: %s by User: %s' %(e, username))
 
         else:
             invalidUser = ['You are not authorized to use this service']
