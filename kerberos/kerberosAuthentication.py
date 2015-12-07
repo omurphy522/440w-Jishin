@@ -28,6 +28,7 @@ try:
                 if out == '':
                     user = subprocess.Popen(['echo', password], stdout=subprocess.PIPE)
                     userpass = subprocess.Popen(['kinit', username], stdin=user.stdout)
+                    storepass, err = userpass.communicate()
                 else:
 
                     jishinLogging.logger.info(username + ' logged in')
@@ -37,6 +38,7 @@ try:
                 print('no tickets')
                 user = subprocess.Popen(['echo', password], stdout=subprocess.PIPE)
                 userpass = subprocess.Popen(['kinit', username], stdin=user.stdout)
+                storepass, err = userpass.communicate()
 
             #	return True
             list_tick = subprocess.Popen(('klist | grep ' + username), stdout=subprocess.PIPE, shell=True)
@@ -44,6 +46,7 @@ try:
             if out != '':
                 return True
             else:
+                subprocess.call(['kdestroy'])
                 return False
 
 
