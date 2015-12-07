@@ -4,7 +4,7 @@ try:
     import subprocess
     import os
     import sys
-    from jishinLogging import LoggingFinal as jishinLogging
+    from jishinLogger import LoggingFinal as jishinLogging
 
     sys.path.append('..')
     from ConstantValues.Constants import constantsclass

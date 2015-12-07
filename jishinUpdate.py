@@ -15,18 +15,18 @@ username = raw_input('Enter your Username: ')
 password = getpass.getpass()
 
 jishin = make_service_client('http://localhost:8080/loginUser', jishinService())
-
-token = jishin.loginUser(username, password)
-
-if token == constantsclass.INCORRECT_PASSWORD:
+try:
     token = jishin.loginUser(username, password)
 
-else:
-    # Calls message queue and returns all messages in queue if any
-    messages = jishin.receivePrediction(token)
+    if token == constantsclass.INCORRECT_PASSWORD:
+        token = jishin.loginUser(username, password)
 
-    if messages:
-        for m in messages:
-            print m
     else:
-        print 'No Messages in Queue, please create a query first'
+        # Call API Update Script
+        update = jishin.updateApi(token)
+        if update == 'You are not authorized to use this service':
+            print update
+        else:
+            print 'Update Successful'
+except Exception as e:
+    print e

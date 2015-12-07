@@ -31,15 +31,10 @@ class Input_Validator:
         self.errors.append(e)
 
     def validate_date(self, currentdate, date):
-	print "currentdate: %s" % currentdate
-	parsedDate = datetime.strptime(currentdate, '%Y-%m-%d').date()
-        print parsedDate
-	CurrentDay = int(parsedDate.day)
-	print CurrentDay
+        parsedDate = datetime.strptime(currentdate, '%Y-%m-%d').date()
+        CurrentDay = int(parsedDate.day)
         CurrentMonth = int(parsedDate.month)
-	print CurrentMonth
         CurrentYear = int(parsedDate.year)
-	print CurrentYear
 
         if len(date) != 8:
             self.add_error(ValidationErrors.InputError(date, InputErrors.InputErrors.INCORRECT_DATE_LENGTH))

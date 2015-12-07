@@ -11,7 +11,7 @@ import web
 from soaplib.wsgi_soap import SimpleWSGISoapApp
 from soaplib.service import soapmethod
 from soaplib.serializers import primitive as soap_types
-from jishinLogging import LoggingFinal as jishinLogging
+from jishinLogger import LoggingFinal as jishinLogging
 
 
 urls = ("/loginUser", "jishinService",

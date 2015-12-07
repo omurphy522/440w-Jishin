@@ -6,14 +6,14 @@
 
 import sys
 sys.path.append('..')
-from messageQueuing import ceRabbitMqPushMessageFinal
-from messageQueuing import clientRabbitMqPickupMessageFinal
+from messageQueuing import ceRabbitMqPushMessage
+from messageQueuing import clientRabbitMqPickupMessage
 import unittest
 from pika.exceptions import *
 from Errors import ValidationErrors
 
-testQueue = ceRabbitMqPushMessageFinal.messageQueue()
-testReceive = clientRabbitMqPickupMessageFinal.messageReceive()
+testQueue = ceRabbitMqPushMessage.messageQueue()
+testReceive = clientRabbitMqPickupMessage.messageReceive()
 username = "username"
 results = 'It Works'
 nonexistQueue = 'bob'

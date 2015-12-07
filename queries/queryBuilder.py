@@ -20,13 +20,13 @@ class queryBuilder:
 
         # Pulls the correct Mongo collection name based on prediction type and region
         if predictionType.upper() == queryBuilder.PredictionTypes[2]:
-            region = queryBuilder.weeklyCollections[region]
+            region = queryBuilder.weeklyCollections[region.upper()]
 
         elif predictionType.upper() == queryBuilder.PredictionTypes[1]:
-            region = queryBuilder.monthlyCollections[region]
+            region = queryBuilder.monthlyCollections[region.upper()]
 
         else:
-            region = queryBuilder.yearlyCollections[region]
+            region = queryBuilder.yearlyCollections[region.upper()]
 
         collection = queryBuilder.db[region]
 

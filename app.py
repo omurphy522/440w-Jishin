@@ -9,15 +9,15 @@ sys.path.append('..')
 import jwt
 from Token import web_token
 from kerberos import kerberosAuthentication
-from messageQueuing import ceRabbitMqPushMessageFinal
-from messageQueuing import clientRabbitMqPickupMessageFinal
+from messageQueuing import ceRabbitMqPushMessage
+from messageQueuing import clientRabbitMqPickupMessage
 from ConstantValues.Constants import constantsclass
 from apiData.computation import ComputationClass
 from apiData import apiParsing
 from queries import queryBuilder
 from Validators import jishinValidator
 from Errors import ValidationErrors
-from jishinLogging import LoggingFinal as jishinLogging
+from jishinLogger import LoggingFinal as jishinLogging
 
 
 class Engine:
@@ -40,6 +40,8 @@ class Engine:
         username = jwt.decode(token, 'secret', algorithms='HS256').get('username')
         claims = jwt.decode(token, 'secret', algorithms='HS256').get('claim')
         currentDate = jwt.decode(token, 'secret', algorithms='HS256').get('dateIssued')
+        region = region.upper()
+        predictionType = predictionType.upper()
 
         if constantsclass.WEB_SERVICE in claims:
 
@@ -66,7 +68,7 @@ class Engine:
                     computationHandler = ComputationClass()
                     results = str(computationHandler.computationalCalculations(collection, predictionType, date))
                     # rabbitMq
-                    messageQueue = ceRabbitMqPushMessageFinal.messageQueue()
+                    messageQueue = ceRabbitMqPushMessage.messageQueue()
                     messageQueue.sendMessage(username, results, date, region, predictionType)
 
                 except Exception as e:
@@ -88,7 +90,7 @@ class Engine:
 
             try:
                 messageQueue = ''
-                messageQueue = clientRabbitMqPickupMessageFinal.messageReceive()
+                messageQueue = clientRabbitMqPickupMessage.messageReceive()
                 results = messageQueue.getMessage(username)
                 jishinLogging.logger.info('Results Returned To %s' % username)
 
@@ -119,5 +121,5 @@ class Engine:
                 jishinLogging.logger.error('Error Running Update: %s by User: %s' %(e, username))
 
         else:
-            invalidUser = ['You are not authorized to use this service']
+            invalidUser = 'You are not authorized to use this service'
             return invalidUser

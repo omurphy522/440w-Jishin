@@ -7,7 +7,7 @@ import sys
 sys.path.append('..')
 from ConstantValues.Constants import constantsclass
 from pymongo import MongoClient
-from jishinLogging import LoggingFinal as jishinLogging
+from jishinLogger import LoggingFinal as jishinLogging
 from datetime import datetime
 
 
@@ -19,7 +19,7 @@ class tokenHandler:
             db = client.eia_data
             collection = db.users
             date = str(datetime.now().date())
-	    databasePayload = collection.distinct("claims", {"username": username})
+            databasePayload = collection.distinct("claims", {"username": username})
             claim = {'username': username, 'claim': databasePayload, 'dateIssued': date}
 
             if ticket:
