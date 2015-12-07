@@ -1,0 +1,320 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/workspace.xml	(revision 629854f5e881c2140b223dc9daaedbd31fa754ed)
++++ .idea/workspace.xml	(revision )
+@@ -2,16 +2,6 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="170799c8-59d5-4c13-8795-e585f2f50517" name="Default" comment="">
+-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logging_owen/__init__.py" />
+-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/messageQueuing/ceRabbitMqPushMessageFinal.py" />
+-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/messageQueuing/clientRabbitMqPickupMessageFinal.py" />
+-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logging_owen/handler_logging.py" />
+-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logging_owen/testOwenLogging.py" />
+-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/messageQueuing/ceRabbitMqPushMessage.py" afterPath="$PROJECT_DIR$/messageQueuing/ceRabbitMqPushMessage.py" />
+-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/messageQueuing/clientRabbitMqPickupMessage.py" afterPath="$PROJECT_DIR$/messageQueuing/clientRabbitMqPickupMessage.py" />
+-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/unitTests/messageQueueUnitTest.py" afterPath="$PROJECT_DIR$/unitTests/messageQueueUnitTest.py" />
+-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/unitTests/webTokenUnitTest.py" afterPath="$PROJECT_DIR$/unitTests/webTokenUnitTest.py" />
+-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Token/web_token.py" afterPath="$PROJECT_DIR$/Token/web_token.py" />
+       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+     </list>
+     <ignored path="440w-Jishin.iws" />
+@@ -48,7 +38,7 @@
+           <file leaf-file-name="clientRabbitMqPickupMessageFinal.py" pinned="false" current-in-tab="true">
+             <entry file="file://$PROJECT_DIR$/messageQueuing/clientRabbitMqPickupMessageFinal.py">
+               <provider selected="true" editor-type-id="text-editor">
+-                <state vertical-scroll-proportion="0.7284345">
++                <state vertical-scroll-proportion="0.53065777">
+                   <caret line="28" column="30" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+                   <folding>
+                     <element signature="e#133#144#0" expanded="true" />
+@@ -74,7 +64,7 @@
+           <file leaf-file-name="handler_logging.py" pinned="false" current-in-tab="true">
+             <entry file="file://$PROJECT_DIR$/logging_owen/handler_logging.py">
+               <provider selected="true" editor-type-id="text-editor">
+-                <state vertical-scroll-proportion="0.02715655">
++                <state vertical-scroll-proportion="0.018952062">
+                   <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+                   <folding />
+                 </state>
+@@ -189,6 +179,7 @@
+       <sortByType />
+     </navigator>
+     <panes>
++      <pane id="Scope" />
+       <pane id="ProjectPane">
+         <subPane>
+           <PATH>
+@@ -265,7 +256,6 @@
+           </PATH>
+         </subPane>
+       </pane>
+-      <pane id="Scope" />
+       <pane id="Scratches" />
+     </panes>
+   </component>
+@@ -591,16 +581,15 @@
+   </component>
+   <component name="ToolWindowManager">
+     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+-    <editor active="true" />
++    <editor active="false" />
+     <layout>
+-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13645943" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
++      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13645943" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29405406" sideWeight="0.5021075" order="7" side_tool="true" content_ui="tabs" />
+       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17818575" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29297298" sideWeight="0.49789253" order="2" side_tool="false" content_ui="tabs" />
++      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29297298" sideWeight="0.49789253" order="2" side_tool="false" content_ui="tabs" />
+       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+@@ -611,6 +600,7 @@
+       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
++      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+     </layout>
+     <layout-to-restore>
+@@ -698,6 +688,40 @@
+     <watches-manager />
+   </component>
+   <component name="editorHistoryManager">
++    <entry file="file://$PROJECT_DIR$/logging_owen/testOwenLogging.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state vertical-scroll-proportion="0.0">
++          <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
++          <folding />
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/messageQueuing/clientRabbitMqPickupMessageFinal.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state vertical-scroll-proportion="0.0">
++          <caret line="28" column="30" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
++          <folding>
++            <element signature="e#133#144#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/unitTests/messageQueueUnitTest.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state vertical-scroll-proportion="0.0">
++          <caret line="21" column="63" selection-start-line="21" selection-start-column="63" selection-end-line="21" selection-end-column="63" />
++          <folding />
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/logging_owen/handler_logging.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state vertical-scroll-proportion="0.0">
++          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
++          <folding />
++        </state>
++      </provider>
++    </entry>
+     <entry file="file://$USER_HOME$/.PyCharm40/system/python_stubs/-762174762/exceptions.py">
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+@@ -825,7 +849,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -861,7 +884,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.7514231">
+           <caret line="1780" column="18" selection-start-line="1780" selection-start-column="18" selection-end-line="1780" selection-end-column="18" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -869,9 +891,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="29" />
+-          <folding>
+-            <element signature="e#152#163#0" expanded="false" />
+-          </folding>
+         </state>
+       </provider>
+     </entry>
+@@ -879,7 +898,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -887,7 +905,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -895,7 +912,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="610" column="0" selection-start-line="610" selection-start-column="0" selection-end-line="610" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -903,7 +919,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -911,7 +926,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="238" column="0" selection-start-line="238" selection-start-column="0" selection-end-line="238" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -919,7 +933,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -927,7 +940,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -935,7 +947,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="1341" column="0" selection-start-line="1341" selection-start-column="0" selection-end-line="1341" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -943,7 +954,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="371" column="0" selection-start-line="371" selection-start-column="0" selection-end-line="371" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -951,7 +961,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -959,7 +968,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="282" column="0" selection-start-line="282" selection-start-column="0" selection-end-line="282" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -967,7 +975,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="1934" column="0" selection-start-line="1934" selection-start-column="0" selection-end-line="1934" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -975,7 +982,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.5702875">
+           <caret line="39" column="51" selection-start-line="39" selection-start-column="51" selection-end-line="39" selection-end-column="51" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -983,7 +989,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.27955273">
+           <caret line="563" column="0" selection-start-line="563" selection-start-column="0" selection-end-line="563" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -999,7 +1004,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+-          <folding />
+         </state>
+       </provider>
+     </entry>
+@@ -1007,9 +1011,6 @@
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+-          <folding>
+-            <element signature="e#0#18#0" expanded="false" />
+-          </folding>
+         </state>
+       </provider>
+     </entry>
+@@ -1021,14 +1022,6 @@
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/logging_owen/handler_logging.py">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state vertical-scroll-proportion="0.02715655">
+-          <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+-          <folding />
+-        </state>
+-      </provider>
+-    </entry>
+     <entry file="file://$PROJECT_DIR$/unitTests/messageQueueUnitTest.py">
+       <provider selected="true" editor-type-id="text-editor">
+         <state vertical-scroll-proportion="0.0">
+@@ -1047,11 +1040,19 @@
+     </entry>
+     <entry file="file://$PROJECT_DIR$/messageQueuing/clientRabbitMqPickupMessageFinal.py">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state vertical-scroll-proportion="0.7284345">
++        <state vertical-scroll-proportion="0.53065777">
+           <caret line="28" column="30" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+           <folding>
+             <element signature="e#133#144#0" expanded="true" />
+           </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/logging_owen/handler_logging.py">
++      <provider selected="true" editor-type-id="text-editor">
++        <state vertical-scroll-proportion="0.018952062">
++          <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
++          <folding />
+         </state>
+       </provider>
+     </entry>
+\ No newline at end of file

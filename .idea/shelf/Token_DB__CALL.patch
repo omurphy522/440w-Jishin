@@ -1,0 +1,135 @@
+Index: messageQueuing/ceRabbitMqPushMessage.py
+===================================================================
+--- messageQueuing/ceRabbitMqPushMessage.py	(revision 549d047f4b24d102cb09358d8db5175bf06bd865)
++++ messageQueuing/ceRabbitMqPushMessage.py	(revision 549d047f4b24d102cb09358d8db5175bf06bd865)
+@@ -1,51 +0,0 @@
+-# Filename: ceRabbitMqPushMessage.py
+-# Author: Owen Murphy
+-# Edited: 11/2/15
+-# Course: IST 440w
+-# Instructor: Professor Oakes
+-# import statements
+-
+-import pika
+-#import logging as LOGGER
+-
+-class messageQueue:
+-    def __init__(self):
+-        pass
+-
+-    def sendMessage(self, username, results):
+-        try:
+-
+-            # username is from the user that created the prediction
+-            # username = raw_input("ENTER USERNAME: ")
+-            # creates a connection
+-            connection = pika.BlockingConnection(pika.ConnectionParameters(
+-                host='localhost'))
+-            # LOGGER.info('%s opened a connection')(username)
+-            channel = connection.channel()
+-            # LOGGER.info('Channel Opened')
+-            # creates a durable persistent queue
+-            channel.queue_declare(queue=username, durable=True)
+-            channel.confirm_delivery()
+-            # LOGGER.info('%s created a durable queue')(username)
+-            message = results
+-
+-            if channel.basic_publish(exchange='',
+-                                     routing_key=username,
+-                                     body=message,
+-                                     properties=pika.BasicProperties(content_type='text/plain',
+-                                                                     delivery_mode=2),
+-                                     mandatory=True):
+-                print('Message publish was confirmed')
+-                               # LOGGER.info('Published message %s')(message)
+-                answer = " [x] Sent %s" % (message)
+-                print answer
+-                connection.close()
+-                return answer
+-            else:
+-                print("Message was not confirmed")
+-            # LOGGER.info('Message Sent to %s')(username)
+-            # LOGGER.info('Connection Closed')
+-
+-        except ValueError as e:
+-            # LOGGER.error(e.message)
+-            print('No Connection Made message not sent')
+\ No newline at end of file
+Index: messageQueuing/clientRabbitMqPickupMessage.py
+===================================================================
+--- messageQueuing/clientRabbitMqPickupMessage.py	(revision 549d047f4b24d102cb09358d8db5175bf06bd865)
++++ messageQueuing/clientRabbitMqPickupMessage.py	(revision 549d047f4b24d102cb09358d8db5175bf06bd865)
+@@ -1,48 +0,0 @@
+-# Filename: clientRabbitMqPickupMessage.py
+-# Author: Owen Murphy
+-# Edited: 11/2/15
+-# Course: IST 440w
+-# Instructor: Professor Oakes
+-
+-#import statements
+-import pika
+-import time
+-
+-
+-class messageReceive:
+-
+-    def getMessage(self, username):
+-
+-        # try catch to log errors
+-        try:
+-
+-            # well be switched to call username from login
+-            # username = raw_input("ENTER USERNAME: ")
+-            # generates connection to message server
+-            connection = pika.BlockingConnection(pika.ConnectionParameters(
+-                    host='localhost'))
+-            channel = connection.channel()
+-            # generate connection to message queue
+-            channel.queue_declare(queue=username, durable=True)
+-            print ' [*] Waiting for messages. To exit press CTRL+C'
+-            # callback method prints results
+-
+-            def callback(ch, method, properties, body):
+-                messageReceived = " [x] Received %r" % body
+-                time.sleep(body.count('.'))
+-                print messageReceived
+-                print " [x] Done"
+-                ch.basic_ack(delivery_tag=method.delivery_tag)
+-                channel.stop_consuming()
+-            channel.basic_qos(prefetch_count=1)
+-            channel.basic_consume(callback,
+-                                  queue=username)
+-
+-            channel.start_consuming()
+-
+-        except ValueError as e:
+-            # LOGGER.error(e.message)
+-            print('No Connection Made')
+-        except Exception as e:
+-            # LOGGER.error(e.message)
+-            print('Error in message receive client')
+\ No newline at end of file
+Index: logging_owen/handler_logging.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- logging_owen/handler_logging.py	(revision 549d047f4b24d102cb09358d8db5175bf06bd865)
++++ logging_owen/handler_logging.py	(revision )
+@@ -9,14 +9,10 @@
+ # create file handler which logs only Error and Critical messages
+ eh = logging.FileHandler('..\Error.log')
+ eh.setLevel(logging.ERROR)
+-# create console handler with a higher log level
+-# ch = logging.StreamHandler()
+-# ch.setLevel(logging.ERROR)
+-# create formatter and add it to the handlers
++# sets the format for the logger
+ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+ ah.setFormatter(formatter)
+ eh.setFormatter(formatter)
+ # add the handlers to logger
+-
+ logger.addHandler(ah)
+ logger.addHandler(eh)
+\ No newline at end of file

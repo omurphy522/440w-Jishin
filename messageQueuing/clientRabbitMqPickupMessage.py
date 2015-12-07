@@ -8,7 +8,7 @@ import sys
 
 sys.path.append('..')
 import pika
-from mikeLogging import LoggingFinal as jishinLogging
+from jishinLogger import LoggingFinal as jishinLogging
 from pika.exceptions import *
 from Errors import ValidationErrors, InputErrors
 
@@ -37,7 +37,7 @@ class messageReceive:
                     break
                 else:
                     raise ValidationErrors.noTagError(method_frame, InputErrors.InputErrors.NO_TAG_ERROR)
-
+	    print messageList
             return messageList
 
 

@@ -1,18 +1,23 @@
-__author__ = 'Osei'
+# Filename: jishinServer.py
+# Author: Osei Seraphin
+# Course: IST 440w
+# Instructor: Professor Oakes
 
 import sys
-
 sys.path.append('..')
+
 import app as confidenceEngine
 import web
 from soaplib.wsgi_soap import SimpleWSGISoapApp
 from soaplib.service import soapmethod
 from soaplib.serializers import primitive as soap_types
-from mikeLogging import LoggingFinal as jishinLogging
+from jishinLogger import LoggingFinal as jishinLogging
+
 
 urls = ("/loginUser", "jishinService",
         "/createPrediction", "jishinService",
-        "/receivePrediction", "jishinService")
+        "/receivePrediction", "jishinService",
+        "/updateApi", "jishinService")
 render = web.template.Template("$def with (var)\n$:var")
 
 
@@ -65,6 +70,19 @@ class SoapService(SimpleWSGISoapApp):
         except Exception as e:
             jishinLogging.logger.error('Receive Prediction %s' %e)
 
+
+    @soapmethod(soap_types.String, _returns=soap_types.Boolean)
+    def updateApi(self, token):
+
+        try:
+            engine = confidenceEngine.Engine()
+
+            updated = engine.apiUpdate(token)
+
+            return updated
+
+        except Exception as e:
+            jishinLogging.logger.error('Error updating API %s' %e)
 
 class jishinService(SoapService):
     """Class for web.py """

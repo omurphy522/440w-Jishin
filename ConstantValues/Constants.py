@@ -1,4 +1,10 @@
+# Filename: Constants.py
+# Author: Osei Seraphin
+# Course: IST 440w
+# Instructor: Professor Oakes
+
 from enum import Enum
+
 
 class constantsclass(Enum):
 
@@ -41,5 +47,5 @@ class constantsclass(Enum):
     }
 
     PREDICTION_TYPES = ['ANNUAL', 'MONTHLY', 'WEEKLY']
-    API_UPDATE ="ApiUpdate"
-    WEB_SERVICE="WebService"
+    API_UPDATE ='ApiUpdate'
+    WEB_SERVICE='WebService'

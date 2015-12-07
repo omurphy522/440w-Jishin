@@ -1,3 +1,4 @@
+__author__ = 'Owen'
 __author__ = 'Osei'
 
 import sys
@@ -7,6 +8,7 @@ from soaplib.client import make_service_client
 from jishinServer import jishinService
 import getpass
 from ConstantValues.Constants import constantsclass
+from datetime import datetime
 
 username = raw_input('Enter your Username: ')
 password = getpass.getpass()
@@ -26,9 +28,8 @@ else:
 
     prediction = jishin.createPrediction(token, region, predictionType, date)
     if prediction:
-        messages = jishin.receivePrediction(token)
-
-        for m in messages:
-            print m
+        time = datetime.now()
+        print 'Submitted %s' % time
     else:
-        print 'Forbidden'
+        print 'Query Not Submitted'
+
