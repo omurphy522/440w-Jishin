@@ -8,7 +8,7 @@ from enum import Enum
 
 class constantsclass(Enum):
 
-    INCORRECT_PASSWORD = "WRONG PASSWORD"
+    INCORRECT_PASSWORD = 'Login Incorrect Please Try Again' 
 
     WEEKLY_COLLECTIONS = {
         'US': 'us_w',

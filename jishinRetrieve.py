@@ -27,4 +27,3 @@ else:
             	print m
         else:
             print 'No More Messages In Queue'
-  

@@ -27,8 +27,6 @@ class tokenHandler:
                 payload = claim
                 token = jwt.encode(payload, secret, 'HS256')
                 jishinLogging.logger.info('Created Token')
-
-                print dumps(jwt.decode(token, secret, algorithms='HS256'))
                 return token
 
             else:

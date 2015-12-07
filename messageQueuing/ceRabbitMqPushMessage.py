@@ -5,7 +5,6 @@
 # Instructor: Professor Oakes
 
 import sys
-
 sys.path.append('..')
 import pika
 from jishinLogger import LoggingFinal as jishinLogging

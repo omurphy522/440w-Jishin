@@ -5,7 +5,6 @@ try:
     import os
     import sys
     from jishinLogger import LoggingFinal as jishinLogging
-
     sys.path.append('..')
     from ConstantValues.Constants import constantsclass
 
@@ -13,36 +12,19 @@ try:
     class kerberosHandler:
 
         def has_kerberos_ticket(self, username, password):
-
-            # checks to see if tickets are in the KDC
-            if subprocess.call(['klist', '-s']) == 0:
-
-                # checks to see if specified username is active in klist
-                list_tick = subprocess.Popen(('klist | grep ' + username), stdout=subprocess.PIPE, shell=True)
-
-                # stores the ouput of list_tick into variable 'out'
-                out, err = list_tick.communicate()
-
-                # this basically says if there's no output from klist, there's no ticket and the user must authenticate
-
-                if out == '':
-                    user = subprocess.Popen(['echo', password], stdout=subprocess.PIPE)
-                    userpass = subprocess.Popen(['kinit', username], stdin=user.stdout)
-                    storepass, err = userpass.communicate()
-                else:
-
-                    jishinLogging.logger.info(username + ' logged in')
-
-            # if there are no tickets in the kerberos cache...
-            else:
-                print('no tickets')
-                user = subprocess.Popen(['echo', password], stdout=subprocess.PIPE)
-                userpass = subprocess.Popen(['kinit', username], stdin=user.stdout)
-                storepass, err = userpass.communicate()
+	    
+	    FNULL = open(os.devnull,'w')
+	    subprocess.Popen(['kdestroy'])
+	    jishinLogging.logger.info('no tickets')
+            user = subprocess.Popen(['echo', password], stdout=subprocess.PIPE)
+            userpass = subprocess.Popen(['kinit', username], stdin=user.stdout, stdout=FNULL,stderr=subprocess.STDOUT)
+	    storepass, err = userpass.communicate()
 
             #	return True
-            list_tick = subprocess.Popen(('klist | grep ' + username), stdout=subprocess.PIPE, shell=True)
-            out, err = list_tick.communicate()
+            #list_tick = subprocess.Popen(('klist | grep ' + username), stdout=subprocess.PIPE, shell=True)
+            list_tick = subprocess.Popen(['klist'], stdout=subprocess.PIPE)
+            list_tick2 = subprocess.Popen(['grep', username], stdin=list_tick.stdout,stdout=FNULL,stderr=subprocess.STDOUT)
+	    out, err = list_tick.communicate()
             if out != '':
                 return True
             else:
