@@ -4,6 +4,7 @@
 # Instructor: Professor Oakes
 
 import sys
+
 sys.path.append('..')
 
 import app as confidenceEngine
@@ -12,7 +13,6 @@ from soaplib.wsgi_soap import SimpleWSGISoapApp
 from soaplib.service import soapmethod
 from soaplib.serializers import primitive as soap_types
 from jishinLogger import LoggingFinal as jishinLogging
-
 
 urls = ("/loginUser", "jishinService",
         "/createPrediction", "jishinService",
@@ -38,7 +38,7 @@ class SoapService(SimpleWSGISoapApp):
             return token
 
         except Exception as e:
-            jishinLogging.logger.error('Login %s' %e)
+            jishinLogging.logger.error('Login %s' % e)
 
     @soapmethod(soap_types.String, soap_types.String, soap_types.String, soap_types.String, _returns=soap_types.Boolean)
     def createPrediction(self, token, region, predictionType, date):
@@ -53,7 +53,7 @@ class SoapService(SimpleWSGISoapApp):
             return prediction
 
         except Exception as e:
-            jishinLogging.logger.error('Create Prediction %s' %e)
+            jishinLogging.logger.error('Create Prediction %s' % e)
 
     @soapmethod(soap_types.String, _returns=soap_types.Array(soap_types.String))
     def receivePrediction(self, token):
@@ -68,8 +68,7 @@ class SoapService(SimpleWSGISoapApp):
             return answer
 
         except Exception as e:
-            jishinLogging.logger.error('Receive Prediction %s' %e)
-
+            jishinLogging.logger.error('Receive Prediction %s' % e)
 
     @soapmethod(soap_types.String, _returns=soap_types.Boolean)
     def updateApi(self, token):
@@ -82,7 +81,8 @@ class SoapService(SimpleWSGISoapApp):
             return updated
 
         except Exception as e:
-            jishinLogging.logger.error('Error updating API %s' %e)
+            jishinLogging.logger.error('Error updating API %s' % e)
+
 
 class jishinService(SoapService):
     """Class for web.py """

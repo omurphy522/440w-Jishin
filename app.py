@@ -4,6 +4,7 @@
 # Instructor: Professor Oakes
 
 import sys
+
 sys.path.append('..')
 import subprocess
 import jwt
@@ -63,7 +64,7 @@ class Engine:
                 # Retrieve correct collection from db to make computation
                 query = queryBuilder.queryBuilder()
                 collection = query.retrieveCollection(region, predictionType)
-		try:
+                try:
                     # computation
                     computationHandler = ComputationClass()
                     results = str(computationHandler.computationalCalculations(collection, predictionType, date))
@@ -103,7 +104,6 @@ class Engine:
             invalidUser = ['You are not authorized to use this service']
             return invalidUser
 
-
     def apiUpdate(self, token):
 
         username = jwt.decode(token, 'secret', algorithms='HS256').get('username')
@@ -118,8 +118,8 @@ class Engine:
                 return True
 
             except Exception as e:
-                jishinLogging.logger.error('Error Running Update: %s by User: %s' %(e, username))
+                jishinLogging.logger.error('Error Running Update: %s by User: %s' % (e, username))
 
         else:
-            
+
             return False

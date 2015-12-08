@@ -1,4 +1,4 @@
-#Filename: jishinRetrieveClient.py
+# Filename: jishinRetrieveClient.py
 # Author: Osei Seraphin
 # Course: IST 440w
 # Instructor: Professor Oakes
@@ -24,9 +24,9 @@ try:
     else:
         # Call API Update Script
         update = jishin.updateApi(token)
-        if update == False:
-            print 'Update Unsuccessful'
-        else:
+        if update:
             print 'Update Successful'
+        else:
+            print 'Update Unsuccessful'
 except Exception as e:
     print e
