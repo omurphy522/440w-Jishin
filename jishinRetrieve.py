@@ -12,19 +12,19 @@ username = raw_input('Enter your Username: ')
 password = getpass.getpass()
 messages = 'no messages'
 jishin = make_service_client('http://localhost:8080/loginUser', jishinService())
-
-token = jishin.loginUser(username, password)
-
-
-if token == constantsclass.INCORRECT_PASSWORD:
+try:
     token = jishin.loginUser(username, password)
 
-else:
-    while messages:
-        messages = jishin.receivePrediction(token)
-        if messages:
-            for m in messages:
-            	print m
-        else:
-            print 'No More Messages In Queue'
-  
+    if token == constantsclass.INCORRECT_PASSWORD:
+        token = jishin.loginUser(username, password)
+
+    else:
+        while messages:
+            messages = jishin.receivePrediction(token)
+            if messages:
+                for m in messages:
+                    print m
+            else:
+                print 'No More Messages In Queue'
+except Exception as e:
+    print e

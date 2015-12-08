@@ -1,4 +1,8 @@
-#!/usr/bin/python
+# Filename: web_token.py
+# Author: Owen Murphy
+# Course: IST 440w
+# Instructor: Professor Oakes
+
 
 from bson.json_util import *
 import jwt
@@ -27,8 +31,6 @@ class tokenHandler:
                 payload = claim
                 token = jwt.encode(payload, secret, 'HS256')
                 jishinLogging.logger.info('Created Token')
-
-                print dumps(jwt.decode(token, secret, algorithms='HS256'))
                 return token
 
             else:
