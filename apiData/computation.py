@@ -6,6 +6,7 @@
 # Modified: 12/03/2015
 
 import sys
+
 sys.path.append('..')
 from time import mktime
 from datetime import date
@@ -13,8 +14,8 @@ from datetime import timedelta
 from jishinLogger import LoggingFinal as jishinLogging
 import time
 
-class ComputationClass:
 
+class ComputationClass:
     def linearRegression(self, date_list, value_list, date_value_list, date_squared_list, date_to_check):
 
         outcome = 0
@@ -26,7 +27,8 @@ class ComputationClass:
             date_value_average = sum(date_value_list) / float(len(date_value_list))
             date_squared_average = sum(date_squared_list) / float(len(date_squared_list))
 
-            slope = ((date_average * value_average) - date_value_average) / (pow(date_average, 2) - date_squared_average)
+            slope = ((date_average * value_average) - date_value_average) / (
+            pow(date_average, 2) - date_squared_average)
 
             b = value_average - (slope * date_average)
 
@@ -171,7 +173,6 @@ class ComputationClass:
 
         # Run Linear Regression on data pulled
         compute_return = self.linearRegression(date_list, value_list, date_value_list,
-                                                           date_squared_list, date_to_check)
+                                               date_squared_list, date_to_check)
 
         return compute_return
-

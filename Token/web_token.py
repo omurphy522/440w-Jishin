@@ -1,4 +1,8 @@
-#!/usr/bin/python
+# Filename: web_token.py
+# Author: Owen Murphy
+# Course: IST 440w
+# Instructor: Professor Oakes
+
 
 from bson.json_util import *
 import jwt

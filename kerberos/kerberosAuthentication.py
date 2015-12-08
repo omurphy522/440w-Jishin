@@ -21,8 +21,8 @@ try:
             storepass, err = userpass.communicate()
 
             list_tick = subprocess.Popen(('klist | grep ' + username), stdout=subprocess.PIPE, shell=True)
-           # list_tick = subprocess.Popen(['klist'], stdout=subprocess.PIPE)
-           # list_tick2 = subprocess.Popen(['grep', username], stdin=list_tick.stdout, stderr=subprocess.STDOUT)
+            # list_tick = subprocess.Popen(['klist'], stdout=subprocess.PIPE)
+            # list_tick2 = subprocess.Popen(['grep', username], stdin=list_tick.stdout, stderr=subprocess.STDOUT)
             out, err = list_tick.communicate()
             if out != '':
                 return True

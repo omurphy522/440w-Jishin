@@ -16,9 +16,9 @@ except ImportError as e:
     print "Import local file apiList not found"
 
 import sys
+
 sys.path.append('..')
 from jishinLogger import LoggingFinal as jishinLogging
-
 
 
 class APIParse:
@@ -117,6 +117,6 @@ class APIParse:
             dataRow = data.findall("row")
 
         except Exception as e:
-            jishinLogging.logger.error("Exception: " , e)
+            jishinLogging.logger.error("Exception: ", e)
 
         return dataRow

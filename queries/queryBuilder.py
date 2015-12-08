@@ -8,7 +8,6 @@ from ConstantValues.Constants import constantsclass
 
 
 class queryBuilder:
-
     client = MongoClient('localhost', 27017)
     db = client.eia_data
     weeklyCollections = constantsclass.WEEKLY_COLLECTIONS
@@ -30,6 +29,6 @@ class queryBuilder:
 
         collection = queryBuilder.db[region]
 
-        data = collection.find({},{"_id":0})
+        data = collection.find({}, {"_id": 0})
 
         return data
