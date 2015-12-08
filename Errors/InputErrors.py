@@ -28,7 +28,7 @@ class InputErrors(Enum):
     INVALID_REGION = 'Please enter a valid region'
 
 ##### Prediction Type Errors
-    INVALID_PREDICTION_TYPE = 'Please select whether you want an Anual, Monthly, or Weekly prediction'
+    INVALID_PREDICTION_TYPE = 'Please select whether you want an Annual, Monthly, or Weekly prediction'
 
 ##### RabbitMQ Error
     NO_TAG_ERROR = "No Delivery Tag"

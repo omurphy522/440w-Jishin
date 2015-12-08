@@ -19,7 +19,7 @@ try:
     token = jishin.loginUser(username, password)
 
     if token == constantsclass.INCORRECT_PASSWORD:
-        token = jishin.loginUser(username, password)
+        print token
 
     else:
         # Call API Update Script

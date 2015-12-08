@@ -30,9 +30,11 @@ class Engine:
             kerberoshandler = kerberosAuthentication.kerberosHandler()
 
             ticket = kerberoshandler.has_kerberos_ticket(username, password)
-            token = tokenhandler.create_token(username, ticket)
-
-            return token
+            if ticket:
+                token = tokenhandler.create_token(username, ticket)
+                return token
+            else:
+                return constantsclass.INCORRECT_PASSWORD
         except Exception as e:
             jishinLogging.logger.error('Error Logging In: %s' % e)
 
@@ -45,21 +47,12 @@ class Engine:
         predictionType = predictionType.upper()
 
         if constantsclass.WEB_SERVICE in claims:
-
+            validator = jishinValidator.Input_Validator()
             try:
-                validator = jishinValidator.Input_Validator()
                 # validates user input before passing it into query builder
-                try:
-
-                    validator.validate_date(currentDate, date)
-                    validator.validate_region(region)
-                    validator.validate_prediction_type(predictionType)
-
-                except ValidationErrors.InputError as ve:
-                    jishinLogging.logger.error('Validation Error %s' % ve)
-                    for e in validator.errors:
-                        jishinLogging.logger.error(e)
-                    print ve.msg
+                validator.validate_date(currentDate, date)
+                validator.validate_region(region)
+                validator.validate_prediction_type(predictionType)
 
                 # Retrieve correct collection from db to make computation
                 query = queryBuilder.queryBuilder()
@@ -77,8 +70,14 @@ class Engine:
 
                 return True
 
+            except ValidationErrors.InputError as ve:
+                jishinLogging.logger.error('Validation Error %s' % ve)
+                for e in validator.errors:
+                    jishinLogging.logger.error(e)
+                print ve.msg
+                return False
             except Exception as e:
-                jishinLogging.logger.error('Error Creating Prediction %s' % e)
+                jishinLogging.logger.error('Error Creating Prediction %s' %e)
         else:
             return False
 

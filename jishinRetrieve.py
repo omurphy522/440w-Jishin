@@ -8,15 +8,19 @@ from jishinServer import jishinService
 import getpass
 from ConstantValues.Constants import constantsclass
 
-username = raw_input('Enter your Username: ')
-password = getpass.getpass()
+username = ''
+password = ''
+while username == '' or  password == '':
+    username = raw_input('Enter your Username: ')
+    password = getpass.getpass()
 messages = 'no messages'
 jishin = make_service_client('http://localhost:8080/loginUser', jishinService())
 try:
     token = jishin.loginUser(username, password)
-
+ 
     if token == constantsclass.INCORRECT_PASSWORD:
-        token = jishin.loginUser(username, password)
+	print token
+         
 
     else:
         while messages:
