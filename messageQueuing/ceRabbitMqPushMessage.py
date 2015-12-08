@@ -17,16 +17,12 @@ class messageQueue:
         try:
             # Open a connection to RabbitMQ on localhost using all default parameters
             connection = pika.BlockingConnection()
-
             # Open the channel
             channel = connection.channel()
-
             # Declare the queue
             channel.queue_declare(queue=username, durable=True, exclusive=False, auto_delete=False)
-
             # Turn on delivery confirmations
             channel.confirm_delivery()
-
             # Send a message
             if channel.basic_publish(exchange='',
                                      routing_key=username,
