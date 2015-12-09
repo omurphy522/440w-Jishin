@@ -1,4 +1,4 @@
-# Filename: ceRabbitMqPushMessageFinal.py
+# Filename: clientRabbitMqPickupMessage.py
 # Author: Owen Murphy
 # Edited: 11/18/15
 # Course: IST 440w
