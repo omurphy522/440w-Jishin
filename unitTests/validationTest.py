@@ -11,9 +11,7 @@ from Validators import jishinValidator
 from Errors import ValidationErrors
 from datetime import datetime
 
-
-validator = jishinValidator.Input_Validator()
-currentDate = datetime.strptime('02/27/2015', '%m/%d/%Y')
+currentDate = str(datetime.strptime('02/27/2015', '%m/%d/%Y').date())
 
 class validation_tests(unittest.TestCase):
 
@@ -46,6 +44,7 @@ class validation_tests(unittest.TestCase):
     def test_validate_date_contains_letter(self):
 
         date = '1231201a'
+
         validator = jishinValidator.Input_Validator()
 
         self.assertRaises(ValidationErrors.InputError, validator.validate_date, currentDate, date)
@@ -128,6 +127,21 @@ class validation_tests(unittest.TestCase):
 
         self.assertFalse(validator.has_error())
 
+    def test_validate_region_contains_number(self):
+
+        region = 'us12'
+        validator = jishinValidator.Input_Validator()
+
+        self.assertRaises(ValidationErrors.InputError, validator.validate_region, region)
+
+    def test_validate_region_contains_special_character(self):
+
+        region = 'us]'
+        validator = jishinValidator.Input_Validator()
+
+        self.assertRaises(ValidationErrors.InputError, validator.validate_region, region)
+
+
     def test_validate_region_invalid_region(self):
 
         region = 'catdog'
@@ -144,6 +158,21 @@ class validation_tests(unittest.TestCase):
         validator.validate_prediction_type(predictionType)
 
         self.assertFalse(validator.has_error())
+
+    def test_validate_prediction_type_contains_number(self):
+
+        predictionType = 'week12'
+        validator = jishinValidator.Input_Validator()
+
+        self.assertRaises(ValidationErrors.InputError, validator.validate_prediction_type, predictionType)
+
+    def test_validate_prediction_type_special_character(self):
+
+        predictionType = 'week]'
+        validator = jishinValidator.Input_Validator()
+
+        self.assertRaises(ValidationErrors.InputError, validator.validate_prediction_type, predictionType)
+
 
     def test_validate_prediction_type_invalid_prediction_type(self):
 
