@@ -83,11 +83,29 @@ class Input_Validator:
                 raise ValidationErrors.InputError(day, InputErrors.InputErrors.INCORRECT_DAY_VALUE)
 
     def validate_region(self, region):
-        if region.upper() not in Regions:
+
+        if any(c.isdigit() for c in region):
+            self.add_error(ValidationErrors.InputError(region, InputErrors.InputErrors.REGION_CONTAINS_NUMBER))
+            raise ValidationErrors.InputError(region, InputErrors.InputErrors.REGION_CONTAINS_NUMBER)
+
+        elif SpecialCharacters.search(region):
+            self.add_error(ValidationErrors.InputError(region, InputErrors.InputErrors.REGION_CONTAINS_SPECIAL_CHARACTER))
+            raise ValidationErrors.InputError(region, InputErrors.InputErrors.REGION_CONTAINS_SPECIAL_CHARACTER)
+
+        elif region.upper() not in Regions:
             self.add_error(ValidationErrors.InputError(region, InputErrors.InputErrors.INVALID_REGION))
             raise ValidationErrors.InputError(region, InputErrors.InputErrors.INVALID_REGION)
 
     def validate_prediction_type(self, predictionType):
-        if predictionType.upper() not in PredictionTypes:
+
+        if any(c.isdigit() for c in predictionType):
+            self.add_error(ValidationErrors.InputError(predictionType, InputErrors.InputErrors.PREDICTION_TYPE_CONTAINS_NUMBER))
+            raise ValidationErrors.InputError(predictionType, InputErrors.InputErrors.PREDICTION_TYPE_CONTAINS_NUMBER)
+
+        elif SpecialCharacters.search(predictionType):
+            self.add_error(ValidationErrors.InputError(predictionType, InputErrors.InputErrors.PREDICTION_TYPE_SPECIAL_CHARACTER))
+            raise ValidationErrors.InputError(predictionType, InputErrors.InputErrors.PREDICTION_TYPE_SPECIAL_CHARACTER)
+
+        elif predictionType.upper() not in PredictionTypes:
             self.add_error(ValidationErrors.InputError(predictionType, InputErrors.InputErrors.INVALID_PREDICTION_TYPE))
             raise ValidationErrors.InputError(predictionType, InputErrors.InputErrors.INVALID_PREDICTION_TYPE)
