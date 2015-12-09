@@ -26,9 +26,15 @@ class InputErrors(Enum):
 
 ##### Region Errors
     INVALID_REGION = 'Please enter a valid region'
+    REGION_CONTAINS_NUMBER = 'Region cannot contain any numbers'
+    REGION_CONTAINS_SPECIAL_CHARACTER = 'Region cannot contain any special characters'
 
 ##### Prediction Type Errors
     INVALID_PREDICTION_TYPE = 'Please select whether you want an Annual, Monthly, or Weekly prediction'
+    PREDICTION_TYPE_CONTAINS_NUMBER = 'Prediction type contain any numbers'
+    PREDICTION_TYPE_SPECIAL_CHARACTER = 'Prediction type cannot contain any special characters'
+
+
 
 ##### RabbitMQ Error
     NO_TAG_ERROR = "No Delivery Tag"
