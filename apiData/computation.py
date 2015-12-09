@@ -160,11 +160,12 @@ class ComputationClass:
                     # Yearly
                     ordinal_date = self.yearlyDateConvert(item)
 
-                # Populate lists to be used for computation
-                date_list.append(ordinal_date)
-                date_squared_list.append(pow(float(ordinal_date), 2))
-                value_list.append(float(item['value']))
-                date_value_list.append(ordinal_date * float(item['value']))
+                if item['value'] != "":
+                    # Populate lists to be used for computation
+                    date_list.append(ordinal_date)
+                    date_squared_list.append(pow(float(ordinal_date), 2))
+                    value_list.append(float(item['value']))
+                    date_value_list.append(ordinal_date * float(item['value']))
 
             date_to_check = self.convertPredictionDate(prediction_date)
 
